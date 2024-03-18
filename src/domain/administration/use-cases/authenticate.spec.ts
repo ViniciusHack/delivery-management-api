@@ -1,11 +1,10 @@
 import { permissions } from '@/domain/core/permissions';
 import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
 import { FakeHashComparer } from 'test/cryptography/fake-hash-comparer';
+import { makeAdmin } from 'test/factories/makeAdmin';
+import { makeConveyer } from 'test/factories/makeConveyer';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
 import { InMemoryConveyersRepository } from 'test/repositories/in-memory-conveyers-repository';
-import { Admin } from '../entities/admin';
-import { Conveyer } from '../entities/conveyer';
-import { Cpf } from '../entities/value-objects/cpf';
 import { AuthenticateUseCase } from './authenticate';
 import { InvalidCredentialsError } from './errors/invalid-credentials';
 
@@ -30,12 +29,13 @@ describe('Authenticate', () => {
   });
 
   it('should be able to authenticate an admin', async () => {
-    const cpf = '12345678909';
-    const password = 'password';
-    const admin = new Admin({ cpf: new Cpf(cpf), password });
+    const admin = makeAdmin();
     await inMemoryAdminsRepository.create(admin);
 
-    const result = await sut.execute({ cpf, password });
+    const result = await sut.execute({
+      cpf: admin.cpf.toString(),
+      password: admin.password,
+    });
 
     expect(JSON.parse(result.token)).toEqual(
       expect.objectContaining({
@@ -47,16 +47,17 @@ describe('Authenticate', () => {
   });
 
   it('should be able to authenticate a conveyer', async () => {
-    const cpf = '12345678909';
-    const password = 'password';
-    const conveyer = new Conveyer({ cpf: new Cpf(cpf), password });
+    const conveyer = makeConveyer();
     await inMemoryConveyersRepository.create(conveyer);
 
-    const result = await sut.execute({ cpf, password });
+    const result = await sut.execute({
+      cpf: conveyer.cpf.toString(),
+      password: conveyer.password,
+    });
 
     expect(JSON.parse(result.token)).toEqual(
       expect.objectContaining({
-        role: 'admin',
+        role: 'conveyer',
         sub: conveyer.id,
         permissions: permissions.conveyer,
       }),

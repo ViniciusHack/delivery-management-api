@@ -2,9 +2,9 @@ import { ConflictError } from '@/domain/core/errors/conflict-error';
 import { NotAllowedError } from '@/domain/core/errors/not-allowed-error';
 import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { makeAdmin } from 'test/factories/makeAdmin';
+import { makeConveyer } from 'test/factories/makeConveyer';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
 import { InMemoryConveyersRepository } from 'test/repositories/in-memory-conveyers-repository';
-import { Conveyer } from '../entities/conveyer';
 import { InvalidCpfError } from '../entities/errors/invalid-cpf';
 import { Cpf } from '../entities/value-objects/cpf';
 import { RegisterConveyerUseCase } from './register-conveyer';
@@ -45,15 +45,15 @@ describe('Register conveyer', () => {
 
     await inMemoryAdminsRepository.create(admin);
 
-    const cpf = '12345678909';
-    const password = 'password';
-
-    inMemoryConveyersRepository.create(
-      new Conveyer({ cpf: new Cpf(cpf), password }),
-    );
+    const conveyer = makeConveyer();
+    inMemoryConveyersRepository.create(conveyer);
 
     await expect(
-      sut.execute({ cpf, password, adminId: admin.id }),
+      sut.execute({
+        cpf: conveyer.cpf.toString(),
+        password: conveyer.password,
+        adminId: admin.id,
+      }),
     ).rejects.toThrow(ConflictError);
   });
 

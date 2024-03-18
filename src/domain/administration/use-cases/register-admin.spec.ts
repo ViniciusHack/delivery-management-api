@@ -1,7 +1,7 @@
 import { ConflictError } from 'src/domain/core/errors/conflict-error';
 import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
+import { makeAdmin } from 'test/factories/makeAdmin';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
-import { Admin } from '../entities/admin';
 import { InvalidCpfError } from '../entities/errors/invalid-cpf';
 import { Cpf } from '../entities/value-objects/cpf';
 import { RegisterAdminUseCase } from './register-admin';
@@ -28,12 +28,13 @@ describe('Register admin', () => {
   });
 
   it('should not register an admin with an already registered cpf', async () => {
-    const cpf = '12345678909';
-    const password = 'password';
+    const admin = makeAdmin();
 
-    inMemoryAdminsRepository.create(new Admin({ cpf: new Cpf(cpf), password }));
+    await inMemoryAdminsRepository.create(admin);
 
-    await expect(sut.execute({ cpf, password })).rejects.toThrow(ConflictError);
+    await expect(
+      sut.execute({ cpf: admin.cpf.toString(), password: admin.password }),
+    ).rejects.toThrow(ConflictError);
   });
 
   it('should not register an admin with an invalid cpf', async () => {

@@ -51,7 +51,7 @@ export class AuthenticateUseCase {
 
     payload = {
       sub: admin?.id ?? conveyer?.id ?? '',
-      role: 'admin',
+      role: admin ? 'admin' : 'conveyer',
       permissions: admin ? permissions.admin : permissions.conveyer,
     };
 
