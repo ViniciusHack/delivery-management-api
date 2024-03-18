@@ -1,6 +1,7 @@
 import { ConflictError } from 'src/domain/core/errors/conflict-error';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
 import { Admin } from '../entities/admin';
+import { InvalidCpfError } from '../entities/errors/invalid-cpf';
 import { Cpf } from '../entities/value-objects/cpf';
 import { RegisterAdminUseCase } from './register-admin';
 
@@ -36,6 +37,8 @@ describe('Register admin', () => {
     const cpf = '004-247-709-3';
     const password = 'password';
 
-    await expect(sut.execute({ cpf, password })).rejects.toThrow();
+    await expect(sut.execute({ cpf, password })).rejects.toThrow(
+      InvalidCpfError,
+    );
   });
 });

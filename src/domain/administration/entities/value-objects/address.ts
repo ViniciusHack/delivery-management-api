@@ -1,3 +1,13 @@
+interface AddressProps {
+  street: string;
+  number: number;
+  neighborhood: string;
+  city: string;
+  state: string;
+  country: string;
+  zipCode: string;
+}
+
 export class Address {
   public readonly street: string;
   public readonly number: number;
@@ -7,7 +17,7 @@ export class Address {
   public readonly country: string;
   public readonly zipCode: string;
 
-  constructor(props: Address) {
+  constructor(props: AddressProps) {
     this.street = props.street;
     this.number = props.number;
     this.neighborhood = props.neighborhood;

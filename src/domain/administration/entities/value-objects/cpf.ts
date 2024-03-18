@@ -1,9 +1,11 @@
+import { InvalidCpfError } from '../errors/invalid-cpf';
+
 export class Cpf {
   private value: string;
 
   constructor(value: string) {
     if (!Cpf.isValid(value)) {
-      throw new Error('Invalid CPF');
+      throw new InvalidCpfError();
     }
 
     this.value = value;
@@ -11,6 +13,10 @@ export class Cpf {
 
   toString(): string {
     return this.value;
+  }
+
+  toMaskedString(): string {
+    return this.value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
   isEqual(cpf: Cpf): boolean {

@@ -1,12 +1,11 @@
 import { Entity } from '../../core/entity';
 
-type Status = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
+type Stage = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
 
 interface OrderProps {
-  status: Status; // Value Object?
+  stage: Stage; // Value Object?
   conveyerId?: string;
   addresseeId: string;
-  createdAt: Date;
   updatedAt?: Date;
   // createdBy?
 }
@@ -16,34 +15,34 @@ export class Order extends Entity<OrderProps> {
     super(props, id);
   }
 
-  get status(): Status {
-    return this.props.status;
+  get stage(): Stage {
+    return this.props.stage;
   }
 
   deliver(): void {
-    if (this.props.status !== 'ON_THE_WAY') {
+    if (this.props.stage !== 'ON_THE_WAY') {
       throw new Error('Order is not on the way to be delivered');
     }
 
-    this.props.status = 'DELIVERED';
+    this.props.stage = 'DELIVERED';
     this.touch();
   }
 
   return(): void {
-    if (this.props.status === 'RETURNED') {
+    if (this.props.stage === 'RETURNED') {
       throw new Error('Order is already returned');
     }
 
-    this.props.status = 'RETURNED';
+    this.props.stage = 'RETURNED';
     this.touch();
   }
 
   pickUp(conveyerId: string): void {
-    if (this.status !== 'WAITING') {
+    if (this.stage !== 'WAITING') {
       throw new Error('Order is not waiting to be picked up');
     }
 
-    this.props.status = 'ON_THE_WAY';
+    this.props.stage = 'ON_THE_WAY';
     this.props.conveyerId = conveyerId;
     this.touch();
   }
@@ -54,10 +53,6 @@ export class Order extends Entity<OrderProps> {
 
   get addresseeId(): string {
     return this.props.addresseeId;
-  }
-
-  get createdAt(): Date {
-    return this.props.createdAt;
   }
 
   get updatedAt(): Date | undefined {

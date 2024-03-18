@@ -15,12 +15,6 @@ export class RegisterAdminUseCase {
     cpf: cpfString,
     password,
   }: RegisterAdminUseCaseProps): Promise<void> {
-    const cpfIsValid = Cpf.isValid(cpfString);
-
-    if (!cpfIsValid) {
-      throw new Error('Invalid CPF');
-    }
-
     const cpf = new Cpf(cpfString);
 
     const adminAlreadyExists = await this.adminsRepository.findByCpf(cpf);

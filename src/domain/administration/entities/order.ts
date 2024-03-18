@@ -1,7 +1,9 @@
 import { Optional } from 'src/domain/core/utils';
 import { Entity } from '../../core/entity';
+import { OrderNotDeliveredError } from './errors/order-not-devlivered';
+import { OrderNotWaitingToBePickedUpError } from './errors/order-not-waiting-to-be-picked-up';
 
-type Status =
+type Stage =
   | 'IN_ANALYSIS'
   | 'WAITING'
   | 'ON_THE_WAY'
@@ -9,7 +11,7 @@ type Status =
   | 'RETURNED';
 
 interface OrderProps {
-  status: Status; // Value Object?
+  stage: Stage; // Value Object?
   conveyerId?: string;
   addresseeId: string;
   createdAt: Date;
@@ -18,20 +20,20 @@ interface OrderProps {
 }
 
 export class Order extends Entity<OrderProps> {
-  constructor(props: Optional<OrderProps, 'status'>) {
-    super({ status: 'IN_ANALYSIS', ...props });
+  constructor(props: Optional<OrderProps, 'stage' | 'createdAt'>) {
+    super({ stage: 'IN_ANALYSIS', createdAt: new Date(), ...props });
   }
 
-  get status(): Status {
-    return this.props.status;
+  get stage(): Stage {
+    return this.props.stage;
   }
 
   ready() {
-    if (this.props.status !== 'IN_ANALYSIS') {
-      throw new Error('Order is not waiting to be picked up');
+    if (this.props.stage !== 'IN_ANALYSIS' && this.props.stage !== 'RETURNED') {
+      throw new OrderNotWaitingToBePickedUpError();
     }
 
-    this.props.status = 'WAITING';
+    this.props.stage = 'WAITING';
     this.touch();
   }
 
@@ -52,8 +54,8 @@ export class Order extends Entity<OrderProps> {
   }
 
   public getDeliveredDate(): Date {
-    if (this.props.status !== 'DELIVERED') {
-      throw new Error('Order is not delivered yet');
+    if (this.props.stage !== 'DELIVERED') {
+      throw new OrderNotDeliveredError();
     } else if (!this.props.updatedAt) {
       throw new Error('Order has no updated date');
     }
