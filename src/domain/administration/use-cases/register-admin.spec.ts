@@ -18,7 +18,7 @@ describe('Register admin', () => {
   });
 
   it('should register a new admin', async () => {
-    const cpf = '004-247-709-38';
+    const cpf = '12345678909';
     const password = 'password';
 
     await sut.execute({ cpf, password });
@@ -28,7 +28,7 @@ describe('Register admin', () => {
   });
 
   it('should not register an admin with an already registered cpf', async () => {
-    const cpf = '004-247-709-38';
+    const cpf = '12345678909';
     const password = 'password';
 
     inMemoryAdminsRepository.create(new Admin({ cpf: new Cpf(cpf), password }));

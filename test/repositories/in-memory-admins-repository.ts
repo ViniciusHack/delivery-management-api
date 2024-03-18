@@ -9,6 +9,10 @@ export class InMemoryAdminsRepository implements AdminsRepository {
     return this.items.find((admin) => admin.cpf.isEqual(cpf)) ?? null;
   }
 
+  async findById(id: string) {
+    return this.items.find((admin) => admin.id === id) ?? null;
+  }
+
   async create(admin: Admin) {
     this.items.push(admin);
   }
