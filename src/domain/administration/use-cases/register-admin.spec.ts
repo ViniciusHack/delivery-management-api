@@ -1,4 +1,5 @@
 import { ConflictError } from 'src/domain/core/errors/conflict-error';
+import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
 import { Admin } from '../entities/admin';
 import { InvalidCpfError } from '../entities/errors/invalid-cpf';
@@ -7,11 +8,13 @@ import { RegisterAdminUseCase } from './register-admin';
 
 let sut: RegisterAdminUseCase;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
+let fakeHashGenerator: FakeHashGenerator;
 
 describe('Register admin', () => {
   beforeEach(() => {
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
-    sut = new RegisterAdminUseCase(inMemoryAdminsRepository);
+    fakeHashGenerator = new FakeHashGenerator();
+    sut = new RegisterAdminUseCase(inMemoryAdminsRepository, fakeHashGenerator);
   });
 
   it('should register a new admin', async () => {
@@ -21,7 +24,7 @@ describe('Register admin', () => {
     await sut.execute({ cpf, password });
 
     const admin = await inMemoryAdminsRepository.findByCpf(new Cpf(cpf));
-    expect(admin).not.toBeNull();
+    expect(admin?.password).toEqual(`hashed:${password}`);
   });
 
   it('should not register an admin with an already registered cpf', async () => {

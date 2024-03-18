@@ -1,4 +1,5 @@
 import { ConflictError } from 'src/domain/core/errors/conflict-error';
+import { HashGenerator } from '../cryptography/hashGenerator';
 import { Admin } from '../entities/admin';
 import { Cpf } from '../entities/value-objects/cpf';
 import { AdminsRepository } from '../repositories/admins-repository';
@@ -9,7 +10,10 @@ interface RegisterAdminUseCaseProps {
 }
 
 export class RegisterAdminUseCase {
-  constructor(private adminsRepository: AdminsRepository) {}
+  constructor(
+    private adminsRepository: AdminsRepository,
+    private hashGenerator: HashGenerator,
+  ) {}
 
   async execute({
     cpf: cpfString,
@@ -22,7 +26,9 @@ export class RegisterAdminUseCase {
       throw new ConflictError('Admin');
     }
 
-    const admin = new Admin({ cpf, password });
+    const passwordHash = await this.hashGenerator.hash(password);
+
+    const admin = new Admin({ cpf, password: passwordHash });
 
     await this.adminsRepository.create(admin);
   }
