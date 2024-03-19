@@ -38,8 +38,8 @@ describe(`Change admin's password`, () => {
       adminId: admin.id,
     });
 
-    const adminPersisted = await inMemoryAdminsRepository.findById(admin.id);
-    expect(adminPersisted?.password).toEqual(`hashed:new-password`);
+    const persistedAdmin = await inMemoryAdminsRepository.findById(admin.id);
+    expect(persistedAdmin?.password).toEqual(`hashed:new-password`);
   });
 
   it(`should not be able to change a the password of an inexistent admin`, async () => {

@@ -33,10 +33,10 @@ describe('Delete conveyer', () => {
       conveyerId: conveyer.id,
     });
 
-    const conveyerPersisted = await inMemoryConveyersRepository.findById(
+    const persistedConveyer = await inMemoryConveyersRepository.findById(
       conveyer.id,
     );
-    expect(conveyerPersisted).toBeNull();
+    expect(persistedConveyer).toBeNull();
   });
 
   it('should not be able to delete a conveyer with an invalid admin', async () => {

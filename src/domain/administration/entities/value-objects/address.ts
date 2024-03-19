@@ -1,6 +1,6 @@
 interface AddressProps {
   street: string;
-  number: number;
+  number: string;
   neighborhood: string;
   city: string;
   state: string;
@@ -10,7 +10,7 @@ interface AddressProps {
 
 export class Address {
   public readonly street: string;
-  public readonly number: number;
+  public readonly number: string;
   public readonly neighborhood: string;
   public readonly city: string;
   public readonly state: string;

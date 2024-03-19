@@ -47,10 +47,10 @@ describe(`Change conveyer's password`, () => {
       adminId: admin.id,
     });
 
-    const conveyerPersisted = await inMemoryConveyersRepository.findById(
+    const persistedConveyer = await inMemoryConveyersRepository.findById(
       conveyer.id,
     );
-    expect(conveyerPersisted?.password).toEqual(`hashed:new-password`);
+    expect(persistedConveyer?.password).toEqual(`hashed:new-password`);
   });
 
   it(`should not be able to change a conveyer's password with an invalid admin`, async () => {
