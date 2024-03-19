@@ -16,4 +16,9 @@ export class InMemoryAdminsRepository implements AdminsRepository {
   async create(admin: Admin) {
     this.items.push(admin);
   }
+
+  async update(admin: Admin) {
+    const index = this.items.findIndex((a) => a.id === admin.id);
+    this.items[index] = admin;
+  }
 }
