@@ -10,11 +10,19 @@ export class InMemoryConveyersRepository implements ConveyersRepository {
     return this.items.find((conveyer) => conveyer.cpf.isEqual(cpf)) ?? null;
   }
 
-  async create(conveyer: Conveyer) {
-    this.items.push(conveyer);
+  async findById(id: string) {
+    return this.items.find((conveyer) => conveyer.id === id) ?? null;
   }
 
   async findMany({ page, perPage }: PaginationParams): Promise<Conveyer[]> {
     return this.items.slice((page - 1) * perPage, page * perPage);
+  }
+
+  async create(conveyer: Conveyer) {
+    this.items.push(conveyer);
+  }
+
+  async delete(id: string) {
+    this.items = this.items.filter((conveyer) => conveyer.id !== id) ?? null;
   }
 }
