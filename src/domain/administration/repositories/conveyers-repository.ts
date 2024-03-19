@@ -7,5 +7,6 @@ export abstract class ConveyersRepository {
   abstract findById(id: string): Promise<Conveyer | null>;
   abstract findMany(params: PaginationParams): Promise<Conveyer[]>;
   abstract create(conveyer: Conveyer): Promise<void>;
+  abstract update(conveyer: Conveyer): Promise<void>;
   abstract delete(id: string): Promise<void>;
 }

@@ -22,6 +22,11 @@ export class InMemoryConveyersRepository implements ConveyersRepository {
     this.items.push(conveyer);
   }
 
+  async update(conveyer: Conveyer) {
+    const index = this.items.findIndex((c) => c.id === conveyer.id);
+    this.items[index] = conveyer;
+  }
+
   async delete(id: string) {
     this.items = this.items.filter((conveyer) => conveyer.id !== id) ?? null;
   }
