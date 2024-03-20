@@ -30,6 +30,11 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     this.items.push(order);
   }
 
+  async update(order: Order) {
+    const index = this.items.findIndex((o) => o.id === order.id);
+    this.items[index] = order;
+  }
+
   async delete(id: string) {
     this.items = this.items.filter((order) => order.id !== id) ?? null;
   }

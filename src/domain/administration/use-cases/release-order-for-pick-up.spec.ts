@@ -4,9 +4,10 @@ import { makeAdmin } from 'test/factories/makeAdmin';
 import { makeOrder } from 'test/factories/makeOrder';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
 import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders-repository';
-import { DeleteOrderUseCase } from './delete-order';
+import { OrderNotWaitingToBePickedUpError } from '../entities/errors/order-not-waiting-to-be-picked-up';
+import { ReleaseOrderForPickUpUseCase } from './release-order-for-pick-up';
 
-let sut: DeleteOrderUseCase;
+let sut: ReleaseOrderForPickUpUseCase;
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
 
@@ -14,13 +15,13 @@ describe('Delete order', () => {
   beforeEach(() => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository();
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
-    sut = new DeleteOrderUseCase(
+    sut = new ReleaseOrderForPickUpUseCase(
       inMemoryOrdersRepository,
       inMemoryAdminsRepository,
     );
   });
 
-  it('should delete an order', async () => {
+  it('should release an order for pick up', async () => {
     const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
@@ -34,10 +35,10 @@ describe('Delete order', () => {
     });
 
     const persistedOrder = await inMemoryOrdersRepository.findById(order.id);
-    expect(persistedOrder).toBeNull();
+    expect(persistedOrder).toHaveProperty('stage', 'WAITING');
   });
 
-  it('should not be able to delete an order with an invalid admin', async () => {
+  it('should not be able to release an order for pick up with an invalid admin', async () => {
     const order = makeOrder();
     inMemoryOrdersRepository.create(order);
 
@@ -53,5 +54,17 @@ describe('Delete order', () => {
     await expect(
       sut.execute({ orderId: 'invalid-order-id', adminId: admin.id }),
     ).rejects.toThrow(ResourceNotFoundError);
+  });
+
+  it('should not be able to release an order for pick up when it is not waiting for pick up', async () => {
+    const admin = makeAdmin();
+    await inMemoryAdminsRepository.create(admin);
+
+    const order = makeOrder({ stage: 'DELIVERED' });
+    inMemoryOrdersRepository.create(order);
+
+    await expect(
+      sut.execute({ orderId: order.id, adminId: admin.id }),
+    ).rejects.toThrow(OrderNotWaitingToBePickedUpError);
   });
 });
