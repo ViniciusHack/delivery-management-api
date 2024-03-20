@@ -1,76 +1,76 @@
-import { NotAllowedError } from '@/domain/core/errors/not-allowed-error';
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { FakeHashComparer } from 'test/cryptography/fake-hash-comparer';
 import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { makeAdmin } from 'test/factories/makeAdmin';
-import { makeConveyer } from 'test/factories/makeConveyer';
+import { makeShipper } from 'test/factories/makeShipper';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
-import { InMemoryConveyersRepository } from 'test/repositories/in-memory-conveyers-repository';
-import { ChangeConveyerPasswordUseCase } from './change-conveyer-password';
+import { InMemoryShippersRepository } from 'test/repositories/in-memory-shippers-repository';
+import { ChangeShipperPasswordUseCase } from './change-shipper-password';
 import { InvalidCredentialsError } from './errors/invalid-credentials';
 
-let sut: ChangeConveyerPasswordUseCase;
-let inMemoryConveyersRepository: InMemoryConveyersRepository;
+let sut: ChangeShipperPasswordUseCase;
+let inMemoryShippersRepository: InMemoryShippersRepository;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
 let fakeHashComparer: FakeHashComparer;
 let fakeHashGenerator: FakeHashGenerator;
 
-describe(`Change conveyer's password`, () => {
+describe(`Change shipper's password`, () => {
   beforeEach(() => {
-    inMemoryConveyersRepository = new InMemoryConveyersRepository();
+    inMemoryShippersRepository = new InMemoryShippersRepository();
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
     fakeHashComparer = new FakeHashComparer();
     fakeHashGenerator = new FakeHashGenerator();
-    sut = new ChangeConveyerPasswordUseCase(
-      inMemoryConveyersRepository,
+    sut = new ChangeShipperPasswordUseCase(
+      inMemoryShippersRepository,
       inMemoryAdminsRepository,
       fakeHashComparer,
       fakeHashGenerator,
     );
   });
 
-  it(`should change a conveyer's password`, async () => {
+  it(`should change a shipper's password`, async () => {
     const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
 
-    const conveyer = makeConveyer({
+    const shipper = makeShipper({
       password: '123456',
     });
 
-    await inMemoryConveyersRepository.create(conveyer);
+    await inMemoryShippersRepository.create(shipper);
 
     await sut.execute({
       newPassword: 'new-password',
       oldPassword: '123456',
-      conveyerId: conveyer.id,
+      shipperId: shipper.id,
       adminId: admin.id,
     });
 
-    const persistedConveyer = await inMemoryConveyersRepository.findById(
-      conveyer.id,
+    const persistedShipper = await inMemoryShippersRepository.findById(
+      shipper.id,
     );
-    expect(persistedConveyer?.password).toEqual(`hashed:new-password`);
+    expect(persistedShipper?.password).toEqual(`hashed:new-password`);
   });
 
-  it(`should not be able to change a conveyer's password with an invalid admin`, async () => {
-    const conveyer = makeConveyer({
+  it(`should not be able to change a shipper's password with an invalid admin`, async () => {
+    const shipper = makeShipper({
       password: '123456',
     });
 
-    await inMemoryConveyersRepository.create(conveyer);
+    await inMemoryShippersRepository.create(shipper);
 
     await expect(
       sut.execute({
         newPassword: 'new-password',
         oldPassword: '123456',
-        conveyerId: conveyer.id,
+        shipperId: shipper.id,
         adminId: 'invalid-admin-id',
       }),
     ).rejects.toThrow(NotAllowedError);
   });
 
-  it(`should not be able to change a the password of an inexistent conveyer`, async () => {
+  it(`should not be able to change a the password of an inexistent shipper`, async () => {
     const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
@@ -79,28 +79,28 @@ describe(`Change conveyer's password`, () => {
       sut.execute({
         newPassword: 'new-password',
         oldPassword: '123456',
-        conveyerId: 'invalid-conveyer-id',
+        shipperId: 'invalid-shipper-id',
         adminId: admin.id,
       }),
     ).rejects.toThrow(ResourceNotFoundError);
   });
 
-  it(`should not be able to change a conveyer's password when the password doesn't match`, async () => {
+  it(`should not be able to change a shipper's password when the password doesn't match`, async () => {
     const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
 
-    const conveyer = makeConveyer({
+    const shipper = makeShipper({
       password: '123456',
     });
 
-    await inMemoryConveyersRepository.create(conveyer);
+    await inMemoryShippersRepository.create(shipper);
 
     await expect(
       sut.execute({
         newPassword: 'new-password',
         oldPassword: 'invalid-old-password',
-        conveyerId: conveyer.id,
+        shipperId: shipper.id,
         adminId: admin.id,
       }),
     ).rejects.toThrow(InvalidCredentialsError);

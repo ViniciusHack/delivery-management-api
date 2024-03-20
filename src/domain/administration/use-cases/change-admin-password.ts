@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { HashComparer } from '../cryptography/hashComparer';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { AdminsRepository } from '../repositories/admins-repository';

@@ -1,6 +1,9 @@
-import { PaginationParams } from '@/domain/core/utils';
+import { PaginationParams } from '@/core/utils';
 import { Order } from 'src/domain/administration/entities/order';
-import { OrdersRepository } from 'src/domain/administration/repositories/orders-repository';
+import {
+  FindManyByShipperIdParams,
+  OrdersRepository,
+} from 'src/domain/administration/repositories/orders-repository';
 
 export class InMemoryOrdersRepository implements OrdersRepository {
   public items: Order[] = [];
@@ -11,6 +14,16 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
   async findMany({ page, perPage }: PaginationParams): Promise<Order[]> {
     return this.items.slice((page - 1) * perPage, page * perPage);
+  }
+
+  async findManyByShipperId({
+    shipperId,
+    page,
+    perPage,
+  }: FindManyByShipperIdParams): Promise<Order[]> {
+    return this.items
+      .filter((order) => order.shipperId === shipperId)
+      .slice((page - 1) * perPage, page * perPage);
   }
 
   async create(order: Order) {

@@ -1,10 +1,10 @@
-import { permissions } from '@/domain/core/permissions';
+import { permissions } from '@/core/permissions';
 import { Encrypter } from '../cryptography/encrypter';
 import { HashComparer } from '../cryptography/hashComparer';
-import { Conveyer } from '../entities/conveyer';
+import { Shipper } from '../entities/shipper';
 import { Cpf } from '../entities/value-objects/cpf';
 import { AdminsRepository } from '../repositories/admins-repository';
-import { ConveyersRepository } from '../repositories/conveyers-repository';
+import { ShippersRepository } from '../repositories/shippers-repository';
 import { InvalidCredentialsError } from './errors/invalid-credentials';
 
 interface AuthenticateUseCaseProps {
@@ -15,7 +15,7 @@ interface AuthenticateUseCaseProps {
 export class AuthenticateUseCase {
   constructor(
     private adminsRepository: AdminsRepository,
-    private conveyersRepository: ConveyersRepository,
+    private shippersRepository: ShippersRepository,
     private hashComparer: HashComparer,
     private encrypter: Encrypter,
   ) {}
@@ -30,19 +30,19 @@ export class AuthenticateUseCase {
       role: '',
       permissions: [''],
     };
-    let conveyer: Conveyer | null = null;
+    let shipper: Shipper | null = null;
 
     const admin = await this.adminsRepository.findByCpf(cpf);
     if (!admin) {
-      conveyer = await this.conveyersRepository.findByCpf(cpf);
-      if (!conveyer) {
+      shipper = await this.shippersRepository.findByCpf(cpf);
+      if (!shipper) {
         throw new InvalidCredentialsError();
       }
     }
 
     const passwordMatches = await this.hashComparer.compare(
       password,
-      admin ? admin.password : conveyer?.password ?? '',
+      admin ? admin.password : shipper?.password ?? '',
     );
 
     if (!passwordMatches) {
@@ -50,9 +50,9 @@ export class AuthenticateUseCase {
     }
 
     payload = {
-      sub: admin?.id ?? conveyer?.id ?? '',
-      role: admin ? 'admin' : 'conveyer',
-      permissions: admin ? permissions.admin : permissions.conveyer,
+      sub: admin?.id ?? shipper?.id ?? '',
+      role: admin ? 'admin' : 'shipper',
+      permissions: admin ? permissions.admin : permissions.shipper,
     };
 
     const token = await this.encrypter.encrypt(payload);

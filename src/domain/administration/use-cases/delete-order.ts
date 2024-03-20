@@ -1,5 +1,5 @@
-import { NotAllowedError } from '@/domain/core/errors/not-allowed-error';
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { AdminsRepository } from '../repositories/admins-repository';
 import { OrdersRepository } from '../repositories/orders-repository';
 

@@ -1,21 +1,21 @@
-import { NotAllowedError } from '@/domain/core/errors/not-allowed-error';
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { HashComparer } from '../cryptography/hashComparer';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { AdminsRepository } from '../repositories/admins-repository';
-import { ConveyersRepository } from '../repositories/conveyers-repository';
+import { ShippersRepository } from '../repositories/shippers-repository';
 import { InvalidCredentialsError } from './errors/invalid-credentials';
 
-interface ChangeConveyerPasswordUseCaseProps {
+interface ChangeShipperPasswordUseCaseProps {
   adminId: string;
-  conveyerId: string;
+  shipperId: string;
   newPassword: string;
   oldPassword: string;
 }
 
-export class ChangeConveyerPasswordUseCase {
+export class ChangeShipperPasswordUseCase {
   constructor(
-    private conveyersRepository: ConveyersRepository,
+    private shippersRepository: ShippersRepository,
     private adminsRepository: AdminsRepository,
     private hashComparer: HashComparer,
     private hashGenerator: HashGenerator,
@@ -23,24 +23,24 @@ export class ChangeConveyerPasswordUseCase {
 
   async execute({
     adminId,
-    conveyerId,
+    shipperId,
     newPassword,
     oldPassword,
-  }: ChangeConveyerPasswordUseCaseProps): Promise<void> {
+  }: ChangeShipperPasswordUseCaseProps): Promise<void> {
     const adminExists = await this.adminsRepository.findById(adminId);
 
     if (!adminExists) {
       throw new NotAllowedError();
     }
 
-    const conveyer = await this.conveyersRepository.findById(conveyerId);
-    if (!conveyer) {
-      throw new ResourceNotFoundError('Conveyer');
+    const shipper = await this.shippersRepository.findById(shipperId);
+    if (!shipper) {
+      throw new ResourceNotFoundError('Shipper');
     }
 
     const doesOldPasswordMatch = await this.hashComparer.compare(
       oldPassword,
-      conveyer.password,
+      shipper.password,
     );
 
     if (!doesOldPasswordMatch) {
@@ -49,8 +49,8 @@ export class ChangeConveyerPasswordUseCase {
 
     const newPasswordHash = await this.hashGenerator.hash(newPassword);
 
-    conveyer.password = newPasswordHash;
+    shipper.password = newPasswordHash;
 
-    await this.conveyersRepository.update(conveyer);
+    await this.shippersRepository.update(shipper);
   }
 }

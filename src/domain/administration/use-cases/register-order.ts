@@ -1,5 +1,5 @@
-import { NotAllowedError } from '@/domain/core/errors/not-allowed-error';
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { Order } from '../entities/order';
 import { AddresseesRepository } from '../repositories/addressees-repository';

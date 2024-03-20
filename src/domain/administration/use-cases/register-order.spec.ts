@@ -1,5 +1,5 @@
-import { NotAllowedError } from '@/domain/core/errors/not-allowed-error';
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { makeAddressee } from 'test/factories/makeAddressee';
 import { makeAdmin } from 'test/factories/makeAdmin';

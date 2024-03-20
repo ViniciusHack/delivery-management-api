@@ -1,4 +1,4 @@
-import { ConflictError } from 'src/domain/core/errors/conflict-error';
+import { ConflictError } from '@/core/errors/conflict-error';
 import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { makeAdmin } from 'test/factories/makeAdmin';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';

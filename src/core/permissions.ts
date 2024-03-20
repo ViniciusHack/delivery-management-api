@@ -1,9 +1,9 @@
 export const permissions = {
   admin: [
-    'create.conveyer',
-    'delete.conveyer',
-    'update.conveyer',
-    'read.conveyer',
+    'create.shipper',
+    'delete.shipper',
+    'update.shipper',
+    'read.shipper',
     'create.order',
     'delete.order',
     'update.order',
@@ -13,5 +13,5 @@ export const permissions = {
     'update.addressee',
     'read.addressee',
   ],
-  conveyer: ['update.order'],
+  shipper: ['update.order'],
 };

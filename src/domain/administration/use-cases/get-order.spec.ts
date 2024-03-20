@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { makeOrder } from 'test/factories/makeOrder';
 import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders-repository';
 import { GetOrderUseCase } from './get-order';

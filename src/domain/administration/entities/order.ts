@@ -1,5 +1,5 @@
-import { Optional } from 'src/domain/core/utils';
-import { Entity } from '../../core/entity';
+import { Optional } from '@/core/utils';
+import { Entity } from '../../../core/entity';
 import { OrderNotDeliveredError } from './errors/order-not-devlivered';
 import { OrderNotWaitingToBePickedUpError } from './errors/order-not-waiting-to-be-picked-up';
 
@@ -12,7 +12,7 @@ type Stage =
 
 interface OrderProps {
   stage: Stage; // Value Object?
-  conveyerId?: string;
+  shipperId?: string;
   addresseeId: string;
   createdAt: Date;
   updatedAt?: Date;
@@ -37,8 +37,8 @@ export class Order extends Entity<OrderProps> {
     this.touch();
   }
 
-  get conveyerId(): string | undefined {
-    return this.props.conveyerId;
+  get shipperId(): string | undefined {
+    return this.props.shipperId;
   }
 
   get addresseeId(): string {

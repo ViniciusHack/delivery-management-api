@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { Order } from '../entities/order';
 import { OrdersRepository } from '../repositories/orders-repository';
 

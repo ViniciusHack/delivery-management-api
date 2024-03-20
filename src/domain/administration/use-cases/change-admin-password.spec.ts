@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/domain/core/errors/resource-not-found-error';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { FakeHashComparer } from 'test/cryptography/fake-hash-comparer';
 import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { makeAdmin } from 'test/factories/makeAdmin';

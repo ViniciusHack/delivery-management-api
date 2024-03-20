@@ -1,28 +1,28 @@
-import { permissions } from '@/domain/core/permissions';
+import { permissions } from '@/core/permissions';
 import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
 import { FakeHashComparer } from 'test/cryptography/fake-hash-comparer';
 import { makeAdmin } from 'test/factories/makeAdmin';
-import { makeConveyer } from 'test/factories/makeConveyer';
+import { makeShipper } from 'test/factories/makeShipper';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
-import { InMemoryConveyersRepository } from 'test/repositories/in-memory-conveyers-repository';
+import { InMemoryShippersRepository } from 'test/repositories/in-memory-shippers-repository';
 import { AuthenticateUseCase } from './authenticate';
 import { InvalidCredentialsError } from './errors/invalid-credentials';
 
 let sut: AuthenticateUseCase;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
-let inMemoryConveyersRepository: InMemoryConveyersRepository;
+let inMemoryShippersRepository: InMemoryShippersRepository;
 let fakeHashComparer: FakeHashComparer;
 let fakeEncrypter: FakeEncrypter;
 
 describe('Authenticate', () => {
   beforeEach(() => {
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
-    inMemoryConveyersRepository = new InMemoryConveyersRepository();
+    inMemoryShippersRepository = new InMemoryShippersRepository();
     fakeHashComparer = new FakeHashComparer();
     fakeEncrypter = new FakeEncrypter();
     sut = new AuthenticateUseCase(
       inMemoryAdminsRepository,
-      inMemoryConveyersRepository,
+      inMemoryShippersRepository,
       fakeHashComparer,
       fakeEncrypter,
     );
@@ -46,20 +46,20 @@ describe('Authenticate', () => {
     );
   });
 
-  it('should be able to authenticate a conveyer', async () => {
-    const conveyer = makeConveyer();
-    await inMemoryConveyersRepository.create(conveyer);
+  it('should be able to authenticate a shipper', async () => {
+    const shipper = makeShipper();
+    await inMemoryShippersRepository.create(shipper);
 
     const result = await sut.execute({
-      cpf: conveyer.cpf.toString(),
-      password: conveyer.password,
+      cpf: shipper.cpf.toString(),
+      password: shipper.password,
     });
 
     expect(JSON.parse(result.token)).toEqual(
       expect.objectContaining({
-        role: 'conveyer',
-        sub: conveyer.id,
-        permissions: permissions.conveyer,
+        role: 'shipper',
+        sub: shipper.id,
+        permissions: permissions.shipper,
       }),
     );
   });

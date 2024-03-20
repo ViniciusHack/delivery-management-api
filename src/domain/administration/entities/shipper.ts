@@ -1,15 +1,15 @@
-import { Optional } from '@/domain/core/utils';
-import { Entity } from '../../core/entity';
+import { Optional } from '@/core/utils';
+import { Entity } from '../../../core/entity';
 import { Cpf } from './value-objects/cpf';
 
-interface ConveyerProps {
+interface ShipperProps {
   cpf: Cpf;
   password: string;
   createdAt: Date;
 }
 
-export class Conveyer extends Entity<ConveyerProps> {
-  constructor(props: Optional<ConveyerProps, 'createdAt'>, id?: string) {
+export class Shipper extends Entity<ShipperProps> {
+  constructor(props: Optional<ShipperProps, 'createdAt'>, id?: string) {
     super({ ...props, createdAt: props.createdAt ?? new Date() }, id);
   }
 

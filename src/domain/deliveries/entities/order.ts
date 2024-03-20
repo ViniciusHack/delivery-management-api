@@ -1,10 +1,10 @@
-import { Entity } from '../../core/entity';
+import { Entity } from '../../../core/entity';
 
 type Stage = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
 
 interface OrderProps {
   stage: Stage; // Value Object?
-  conveyerId?: string;
+  shipperId?: string;
   addresseeId: string;
   updatedAt?: Date;
   // createdBy?
@@ -37,18 +37,18 @@ export class Order extends Entity<OrderProps> {
     this.touch();
   }
 
-  pickUp(conveyerId: string): void {
+  pickUp(shipperId: string): void {
     if (this.stage !== 'WAITING') {
       throw new Error('Order is not waiting to be picked up');
     }
 
     this.props.stage = 'ON_THE_WAY';
-    this.props.conveyerId = conveyerId;
+    this.props.shipperId = shipperId;
     this.touch();
   }
 
-  get conveyerId(): string | undefined {
-    return this.props.conveyerId;
+  get shipperId(): string | undefined {
+    return this.props.shipperId;
   }
 
   get addresseeId(): string {

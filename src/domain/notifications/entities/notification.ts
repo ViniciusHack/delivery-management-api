@@ -1,4 +1,4 @@
-import { Entity } from 'src/domain/core/entity';
+import { Entity } from '@/core/entity';
 
 interface NotificationProps {
   title: string;

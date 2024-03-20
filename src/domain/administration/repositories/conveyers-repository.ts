@@ -1,12 +1,12 @@
-import { PaginationParams } from '@/domain/core/utils';
-import { Conveyer } from '../entities/conveyer';
+import { PaginationParams } from '@/core/utils';
+import { Shipper } from '../entities/shipper';
 import { Cpf } from '../entities/value-objects/cpf';
 
-export abstract class ConveyersRepository {
-  abstract findByCpf(cpf: Cpf): Promise<Conveyer | null>;
-  abstract findById(id: string): Promise<Conveyer | null>;
-  abstract findMany(params: PaginationParams): Promise<Conveyer[]>;
-  abstract create(conveyer: Conveyer): Promise<void>;
-  abstract update(conveyer: Conveyer): Promise<void>;
+export abstract class ShippersRepository {
+  abstract findByCpf(cpf: Cpf): Promise<Shipper | null>;
+  abstract findById(id: string): Promise<Shipper | null>;
+  abstract findMany(params: PaginationParams): Promise<Shipper[]>;
+  abstract create(shipper: Shipper): Promise<void>;
+  abstract update(shipper: Shipper): Promise<void>;
   abstract delete(id: string): Promise<void>;
 }

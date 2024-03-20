@@ -1,4 +1,4 @@
-import { ConflictError } from 'src/domain/core/errors/conflict-error';
+import { ConflictError } from '@/core/errors/conflict-error';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { Admin } from '../entities/admin';
 import { Cpf } from '../entities/value-objects/cpf';
