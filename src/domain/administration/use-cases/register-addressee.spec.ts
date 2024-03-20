@@ -12,7 +12,6 @@ describe('Register addressee', () => {
   beforeEach(() => {
     inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
-    inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
     sut = new RegisterAddresseeUseCase(
       inMemoryAddresseesRepository,
       inMemoryAdminsRepository,

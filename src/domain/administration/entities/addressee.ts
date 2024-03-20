@@ -13,4 +13,8 @@ export class Addressee extends Entity<AddresseeProps> {
   get address(): Address {
     return this.props.address;
   }
+
+  set address(address: Address) {
+    this.props.address = address;
+  }
 }
