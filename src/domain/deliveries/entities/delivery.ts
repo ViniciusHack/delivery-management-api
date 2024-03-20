@@ -1,17 +1,19 @@
 import { Entity } from '../../../core/entity';
+import { DeliveryNotDeliverableError } from './errors/delivery-not-deliverable';
+import { DeliveryAlreadyReturnedError } from './errors/delivery-not-returnable';
+import { DeliveryNotWaitingPickUpError } from './errors/delivery-not-waiting-for-pick-up';
 
 type Stage = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
 
-interface OrderProps {
+interface DeliveryProps {
   stage: Stage; // Value Object?
   shipperId?: string;
   addresseeId: string;
   updatedAt?: Date;
-  // createdBy?
 }
 
-export class Order extends Entity<OrderProps> {
-  constructor(props: OrderProps, id: string) {
+export class Delivery extends Entity<DeliveryProps> {
+  constructor(props: DeliveryProps, id?: string) {
     super(props, id);
   }
 
@@ -21,7 +23,7 @@ export class Order extends Entity<OrderProps> {
 
   deliver(): void {
     if (this.props.stage !== 'ON_THE_WAY') {
-      throw new Error('Order is not on the way to be delivered');
+      throw new DeliveryNotDeliverableError();
     }
 
     this.props.stage = 'DELIVERED';
@@ -29,8 +31,8 @@ export class Order extends Entity<OrderProps> {
   }
 
   return(): void {
-    if (this.props.stage === 'RETURNED') {
-      throw new Error('Order is already returned');
+    if (this.props.stage !== 'ON_THE_WAY') {
+      throw new DeliveryAlreadyReturnedError();
     }
 
     this.props.stage = 'RETURNED';
@@ -39,7 +41,7 @@ export class Order extends Entity<OrderProps> {
 
   pickUp(shipperId: string): void {
     if (this.stage !== 'WAITING') {
-      throw new Error('Order is not waiting to be picked up');
+      throw new DeliveryNotWaitingPickUpError();
     }
 
     this.props.stage = 'ON_THE_WAY';

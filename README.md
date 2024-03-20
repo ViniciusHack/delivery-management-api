@@ -10,7 +10,7 @@
     [ X ] Deletar encomenda
 [ X ] Deve ser possível listar as entregas de um usuário
 [ X ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
-[   ] Deve ser possível realizar o CRUD dos destinatários
+[ X ] Deve ser possível realizar o CRUD dos destinatários
 [   ] Deve ser possível retirar uma encomenda
 [   ] Deve ser possível marcar uma encomenda como entregue
 [   ] Deve ser possível marcar uma encomenda como devolvida
@@ -22,7 +22,7 @@
 [ X ] Somente o admin pode alterar a senha de um usuário
 [ X ] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
 [ X ] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
-[   ] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
-[   ] Não deve ser possível um entregador listar as encomendas de outro entregador
+[ X ] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
+[ X ] Não deve ser possível um entregador listar as encomendas de outro entregador
 [   ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 [   ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
