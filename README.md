@@ -9,7 +9,7 @@
     [ X ] Ver encomenda
     [ X ] Deletar encomenda
 [ X ] Deve ser possível listar as entregas de um usuário
-[   ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
+[ X ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 [   ] Deve ser possível realizar o CRUD dos destinatários
 [   ] Deve ser possível retirar uma encomenda
 [   ] Deve ser possível marcar uma encomenda como entregue

@@ -1,6 +1,5 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import { FakeHashGenerator } from 'test/cryptography/fake-hash-generator';
 import { makeAddressee } from 'test/factories/makeAddressee';
 import { makeAdmin } from 'test/factories/makeAdmin';
 import { InMemoryAddresseesRepository } from 'test/repositories/in-memory-addressees-repository';
@@ -12,19 +11,16 @@ let sut: RegisterOrderUseCase;
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
 let inMemoryAddresseesRepository: InMemoryAddresseesRepository;
-let fakeHashGenerator: FakeHashGenerator;
 
 describe('Register order', () => {
   beforeEach(() => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository();
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
     inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
-    fakeHashGenerator = new FakeHashGenerator();
     sut = new RegisterOrderUseCase(
       inMemoryOrdersRepository,
       inMemoryAdminsRepository,
       inMemoryAddresseesRepository,
-      fakeHashGenerator,
     );
   });
 

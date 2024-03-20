@@ -1,6 +1,5 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import { HashGenerator } from '../cryptography/hashGenerator';
 import { Order } from '../entities/order';
 import { AddresseesRepository } from '../repositories/addressees-repository';
 import { AdminsRepository } from '../repositories/admins-repository';
@@ -16,7 +15,6 @@ export class RegisterOrderUseCase {
     private ordersRepository: OrdersRepository,
     private adminsRepository: AdminsRepository,
     private addresseeRepository: AddresseesRepository,
-    private hashGenerator: HashGenerator,
   ) {}
 
   async execute({
