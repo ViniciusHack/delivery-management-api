@@ -1,4 +1,6 @@
 import { Entity } from '@/core/entity';
+import { Optional } from '@/core/utils';
+import { NotificationAlreadyRead } from './errors/notification-already-read';
 
 interface NotificationProps {
   title: string;
@@ -10,8 +12,8 @@ interface NotificationProps {
 }
 
 export class Notification extends Entity<NotificationProps> {
-  constructor(props: NotificationProps) {
-    super(props);
+  constructor(props: Optional<NotificationProps, 'createdAt'>, id?: string) {
+    super({ ...props, createdAt: props.createdAt ?? new Date() }, id);
   }
 
   get title(): string {
@@ -39,6 +41,9 @@ export class Notification extends Entity<NotificationProps> {
   }
 
   public read(): void {
+    if (this.props.readAt) {
+      throw new NotificationAlreadyRead();
+    }
     this.props.readAt = new Date();
     this.touch();
   }
