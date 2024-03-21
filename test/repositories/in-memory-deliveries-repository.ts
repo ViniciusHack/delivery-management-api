@@ -12,8 +12,4 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
     const index = this.items.findIndex((o) => o.id === delivery.id);
     this.items[index] = delivery;
   }
-
-  async delete(id: string) {
-    this.items = this.items.filter((delivery) => delivery.id !== id) ?? null;
-  }
 }
