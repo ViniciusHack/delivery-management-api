@@ -11,7 +11,7 @@ let sut: ReturnDeliveryUseCase;
 let inMemoryDeliveriesRepository: InMemoryDeliveriesRepository;
 let inMemoryShippersRepository: InMemoryShippersRepository;
 
-describe('Register delivery', () => {
+describe('Return delivery', () => {
   beforeEach(() => {
     inMemoryDeliveriesRepository = new InMemoryDeliveriesRepository();
     inMemoryShippersRepository = new InMemoryShippersRepository();
