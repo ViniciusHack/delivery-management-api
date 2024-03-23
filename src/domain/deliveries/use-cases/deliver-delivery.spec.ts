@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { makeDelivery } from 'test/factories/makeDelivery';
 import { makeShipper } from 'test/factories/makeDeliveryShipper';
 import { makePhoto } from 'test/factories/makePhoto';
+import { InMemoryAddresseesRepository } from 'test/repositories/in-memory-deliveries-addressees-repository';
 import { InMemoryDeliveriesRepository } from 'test/repositories/in-memory-deliveries-repository';
 import { InMemoryShippersRepository } from 'test/repositories/in-memory-delivery-shippers-repository';
 import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-repository';
@@ -14,10 +15,14 @@ let sut: DeliverDeliveryUseCase;
 let inMemoryDeliveriesRepository: InMemoryDeliveriesRepository;
 let inMemoryShippersRepository: InMemoryShippersRepository;
 let inMemoryPhotosRepository: InMemoryPhotosRepository;
+let inMemoryAddresseesRepository: InMemoryAddresseesRepository;
 
 describe('Register delivery', () => {
   beforeEach(() => {
-    inMemoryDeliveriesRepository = new InMemoryDeliveriesRepository();
+    inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
+    inMemoryDeliveriesRepository = new InMemoryDeliveriesRepository(
+      inMemoryAddresseesRepository,
+    );
     inMemoryShippersRepository = new InMemoryShippersRepository();
     inMemoryPhotosRepository = new InMemoryPhotosRepository();
     sut = new DeliverDeliveryUseCase(

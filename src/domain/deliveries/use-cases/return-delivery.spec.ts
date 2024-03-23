@@ -2,6 +2,7 @@ import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { makeDelivery } from 'test/factories/makeDelivery';
 import { makeShipper } from 'test/factories/makeDeliveryShipper';
+import { InMemoryAddresseesRepository } from 'test/repositories/in-memory-deliveries-addressees-repository';
 import { InMemoryDeliveriesRepository } from 'test/repositories/in-memory-deliveries-repository';
 import { InMemoryShippersRepository } from 'test/repositories/in-memory-delivery-shippers-repository';
 import { DeliveryNotReturnableError } from '../entities/errors/delivery-not-returnable';
@@ -10,10 +11,14 @@ import { ReturnDeliveryUseCase } from './return-delivery';
 let sut: ReturnDeliveryUseCase;
 let inMemoryDeliveriesRepository: InMemoryDeliveriesRepository;
 let inMemoryShippersRepository: InMemoryShippersRepository;
+let inMemoryAddresseesRepository: InMemoryAddresseesRepository;
 
 describe('Return delivery', () => {
   beforeEach(() => {
-    inMemoryDeliveriesRepository = new InMemoryDeliveriesRepository();
+    inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
+    inMemoryDeliveriesRepository = new InMemoryDeliveriesRepository(
+      inMemoryAddresseesRepository,
+    );
     inMemoryShippersRepository = new InMemoryShippersRepository();
     sut = new ReturnDeliveryUseCase(
       inMemoryDeliveriesRepository,

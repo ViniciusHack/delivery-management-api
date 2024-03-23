@@ -19,7 +19,7 @@ export class UploadAndCreatePhotoUseCase {
     body,
     fileName,
     fileType,
-  }: UploadPhotoUseCaseProps): Promise<Photo> {
+  }: UploadPhotoUseCaseProps): Promise<{ photo: Photo }> {
     if (fileType.match(/image\/*/) === null) {
       throw new InvalidFileTypeError();
     }
@@ -32,6 +32,6 @@ export class UploadAndCreatePhotoUseCase {
 
     await this.photosRepository.create(photo);
 
-    return photo;
+    return { photo };
   }
 }

@@ -1,4 +1,5 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { FakeGeocoder } from 'test/addresses/fake-geocoder';
 import { makeAdmin } from 'test/factories/makeAdmin';
 import { InMemoryAddresseesRepository } from 'test/repositories/in-memory-addressees-repository';
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
@@ -7,14 +8,17 @@ import { RegisterAddresseeUseCase } from './register-addressee';
 let sut: RegisterAddresseeUseCase;
 let inMemoryAddresseesRepository: InMemoryAddresseesRepository;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
+let fakeGeocoder: FakeGeocoder;
 
 describe('Register addressee', () => {
   beforeEach(() => {
     inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
+    fakeGeocoder = new FakeGeocoder();
     sut = new RegisterAddresseeUseCase(
       inMemoryAddresseesRepository,
       inMemoryAdminsRepository,
+      fakeGeocoder,
     );
   });
 
@@ -46,6 +50,8 @@ describe('Register addressee', () => {
           state: 'State',
           street: 'Street',
           zipCode: 'ZipCode',
+          latitude: expect.any(Number),
+          longitude: expect.any(Number),
         },
       }),
     );

@@ -8,7 +8,7 @@ type Stage = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
 interface DeliveryProps {
   stage: Stage; // Value Object?
   shipperId?: string;
-  // addresseeId: string;
+  addresseeId: string;
   updatedAt?: Date;
 }
 
@@ -53,9 +53,9 @@ export class Delivery extends Entity<DeliveryProps> {
     return this.props.shipperId;
   }
 
-  // get addresseeId(): string {
-  //   return this.props.addresseeId;
-  // }
+  get addresseeId(): string {
+    return this.props.addresseeId;
+  }
 
   get updatedAt(): Date | undefined {
     return this.props.updatedAt;

@@ -1,4 +1,5 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Geocoder } from '../addresses/geocoder';
 import { Addressee } from '../entities/addressee';
 import { Address } from '../entities/value-objects/address';
 import { AddresseesRepository } from '../repositories/addressees-repository';
@@ -19,6 +20,7 @@ export class RegisterAddresseeUseCase {
   constructor(
     private addresseesRepository: AddresseesRepository,
     private adminsRepository: AdminsRepository,
+    private geocoder: Geocoder,
   ) {}
 
   async execute({
@@ -37,6 +39,16 @@ export class RegisterAddresseeUseCase {
       throw new NotAllowedError();
     }
 
+    const { latitude, longitude } = await this.geocoder.getCoordinates({
+      street,
+      number,
+      neighborhood,
+      city,
+      state,
+      country,
+      zipCode,
+    });
+
     const address = new Address({
       street,
       number,
@@ -45,6 +57,8 @@ export class RegisterAddresseeUseCase {
       state,
       country,
       zipCode,
+      latitude,
+      longitude,
     });
 
     const addressee = new Addressee({ address });
