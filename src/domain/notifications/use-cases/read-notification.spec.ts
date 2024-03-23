@@ -11,7 +11,7 @@ let sut: ReadNotificationUseCase;
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository;
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository;
 
-describe('Register delivery', () => {
+describe('Read notification', () => {
   beforeEach(() => {
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository();
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository();
@@ -39,9 +39,9 @@ describe('Register delivery', () => {
       recipientId: notification.recipientId,
     });
 
-    const persistedDelivery = inMemoryNotificationsRepository.items[0];
+    const persistedNotification = inMemoryNotificationsRepository.items[0];
 
-    expect(persistedDelivery).toEqual(
+    expect(persistedNotification).toEqual(
       expect.objectContaining({
         id: notification.id,
         recipientId: recipient.id,
@@ -50,7 +50,7 @@ describe('Register delivery', () => {
       }),
     );
 
-    expect(persistedDelivery.updatedAt?.getTime()).toBeGreaterThanOrEqual(
+    expect(persistedNotification.updatedAt?.getTime()).toBeGreaterThanOrEqual(
       beforeReadDate.getTime(),
     );
   });
