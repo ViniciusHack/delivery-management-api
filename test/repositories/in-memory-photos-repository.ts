@@ -8,6 +8,10 @@ export class InMemoryPhotosRepository implements PhotosRepository {
     return this.items.find((photo) => photo.id === id) ?? null;
   }
 
+  async create(photo: Photo) {
+    this.items.push(photo);
+  }
+
   async update(photo: Photo) {
     const index = this.items.findIndex((c) => c.id === photo.id);
     this.items[index] = photo;

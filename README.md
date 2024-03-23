@@ -12,7 +12,7 @@
 [ X ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 [ X ] Deve ser possível realizar o CRUD dos destinatários
 [ X ] Deve ser possível retirar uma encomenda
-[   ] Deve ser possível marcar uma encomenda como entregue
+[ X ] Deve ser possível marcar uma encomenda como entregue
 [ X ] Deve ser possível marcar uma encomenda como devolvida
 [   ] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 [   ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
@@ -24,8 +24,9 @@
 [ X ] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 [ X ] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 [ X ] Não deve ser possível um entregador listar as encomendas de outro entregador
-[   ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
-[   ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
+[ X ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
+    [ X ] Rota para pré registro de foto
+[ X ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 
 
 [   ] Infra
