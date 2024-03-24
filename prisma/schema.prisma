@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  SHIPPER
+}
+
+model User {
+  id        String    @id @default(uuid())
+  cpf       String    @unique
+  password  String
+  role      UserRole
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  orders        Order[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model Addressee {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  street       String
+  number       String
+  neighborhood String
+  city         String
+  state        String
+  country      String
+  zipCode      String    @map("zip_code")
+  latitude     Float
+  longitude    Float
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  orders       Order[]
+
+  @@map("addressees")
+}
+
+enum OrderStage {
+  IN_ANALYSIS
+  WAITING
+  ON_THE_WAY
+  DELIVERED
+  RETURNED
+}
+
+model Order {
+  id          String     @id @default(uuid())
+  shipperId   String     @map("shipper_id")
+  addresseeId String     @map("addressee_id")
+  stage       OrderStage
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  shipper   User      @relation(fields: [shipperId], references: [id])
+  addressee Addressee @relation(fields: [addresseeId], references: [id])
+  photo     Photo?
+
+  @@map("orders")
+}
+
+model Notification {
+  id          String    @id @default(uuid())
+  recipientId String    @map("recipient_id")
+  title       String
+  message     String
+  readAt      DateTime? @map("read_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  recipient User @relation(fields: [recipientId], references: [id])
+
+  @@map("notifications")
+}
+
+model Photo {
+  id         String    @id @default(uuid())
+  deliveryId String?   @unique @map("delivery_id")
+  link       String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  delivery Order? @relation(fields: [deliveryId], references: [id])
+
+  @@map("photos")
+}

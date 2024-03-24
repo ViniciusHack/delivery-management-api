@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { FakeGeocoder } from 'test/addresses/fake-geocoder';
 import { makeAddressee } from 'test/factories/makeAddressee';
 import { makeAdmin } from 'test/factories/makeAdmin';
 import { InMemoryAddresseesRepository } from 'test/repositories/in-memory-addressees-repository';
@@ -9,14 +10,17 @@ import { UpdateAddresseeUseCase } from './update-addressee';
 let sut: UpdateAddresseeUseCase;
 let inMemoryAddresseesRepository: InMemoryAddresseesRepository;
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
+let fakeGeocoder: FakeGeocoder;
 
 describe('Update addressee', () => {
   beforeEach(() => {
+    fakeGeocoder = new FakeGeocoder();
     inMemoryAddresseesRepository = new InMemoryAddresseesRepository();
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
     sut = new UpdateAddresseeUseCase(
       inMemoryAddresseesRepository,
       inMemoryAdminsRepository,
+      fakeGeocoder,
     );
   });
 
@@ -52,6 +56,8 @@ describe('Update addressee', () => {
           state: 'New State',
           street: 'New Street',
           zipCode: 'New ZipCode',
+          latitude: expect.any(Number),
+          longitude: expect.any(Number),
         },
       }),
     );
