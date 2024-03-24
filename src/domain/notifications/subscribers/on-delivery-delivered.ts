@@ -3,7 +3,7 @@ import { EventHandler } from '@/core/events/event-handler';
 import { DeliveryDeliveredEvent } from '@/domain/deliveries/events/delivery-delivered-event';
 import { CreateAndSendNotificationUseCase } from '../use-cases/create-and-send-notification';
 
-export class OnDeliverDelivered implements EventHandler {
+export class OnDeliveryDelivered implements EventHandler {
   constructor(
     private createAndSendNotificationUseCase: CreateAndSendNotificationUseCase,
   ) {}
