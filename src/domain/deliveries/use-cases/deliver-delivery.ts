@@ -1,5 +1,7 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { DomainEvents } from '@/core/events/domain-events';
+import { DeliveryDeliveredEvent } from '../events/delivery-delivered-event';
 import { DeliveriesRepository } from '../repositories/deliveries-repository';
 import { PhotosRepository } from '../repositories/photos-repository';
 import { ShippersRepository } from '../repositories/shippers-repository';
@@ -49,5 +51,6 @@ export class DeliverDeliveryUseCase {
 
     await this.photosRepository.update(photo);
     await this.deliveriesRepository.update(delivery);
+    DomainEvents.dispatch(new DeliveryDeliveredEvent(delivery));
   }
 }

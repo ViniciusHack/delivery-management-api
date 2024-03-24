@@ -1,5 +1,5 @@
+import { AggregateRoot } from '@/core/aggregate-root';
 import { Optional } from '@/core/utils';
-import { Entity } from '../../../core/entity';
 import { OrderNotDeliveredError } from './errors/order-not-devlivered';
 import { OrderNotWaitingToBePickedUpError } from './errors/order-not-waiting-to-be-picked-up';
 
@@ -19,7 +19,7 @@ interface OrderProps {
   // createdBy?
 }
 
-export class Order extends Entity<OrderProps> {
+export class Order extends AggregateRoot<OrderProps> {
   constructor(props: Optional<OrderProps, 'stage' | 'createdAt'>) {
     super({ stage: 'IN_ANALYSIS', createdAt: new Date(), ...props });
   }

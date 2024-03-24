@@ -12,4 +12,16 @@ export class Entity<Props> {
   get id(): string {
     return this._id;
   }
+
+  equals(object?: Entity<Props>): boolean {
+    if (object == null || object == undefined) {
+      return false;
+    }
+
+    if (this === object) {
+      return true;
+    }
+
+    return this.id === object.id;
+  }
 }

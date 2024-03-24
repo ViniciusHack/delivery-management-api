@@ -8,6 +8,10 @@ export class InMemoryAddresseesRepository implements AddresseesRepository {
     return this.items.find((addressee) => addressee.id === id) ?? null;
   }
 
+  async findByEmail(email: string) {
+    return this.items.find((addressee) => addressee.email === email) ?? null;
+  }
+
   async create(addressee: Addressee) {
     this.items.push(addressee);
   }

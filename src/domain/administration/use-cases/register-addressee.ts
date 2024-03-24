@@ -1,4 +1,5 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists';
 import { Geocoder } from '../addresses/geocoder';
 import { Addressee } from '../entities/addressee';
 import { Address } from '../entities/value-objects/address';
@@ -14,6 +15,7 @@ interface RegisterAddresseeUseCaseProps {
   state: string;
   country: string;
   zipCode: string;
+  email: string;
 }
 
 export class RegisterAddresseeUseCase {
@@ -32,11 +34,20 @@ export class RegisterAddresseeUseCase {
     state,
     country,
     zipCode,
+    email,
   }: RegisterAddresseeUseCaseProps): Promise<void> {
     const adminExists = await this.adminsRepository.findById(adminId);
 
     if (!adminExists) {
       throw new NotAllowedError();
+    }
+
+    const addresseeAlreadyExists = await this.addresseesRepository.findByEmail(
+      email,
+    );
+
+    if (addresseeAlreadyExists) {
+      throw new ResourceAlreadyExistsError();
     }
 
     const { latitude, longitude } = await this.geocoder.getCoordinates({
@@ -61,7 +72,7 @@ export class RegisterAddresseeUseCase {
       longitude,
     });
 
-    const addressee = new Addressee({ address });
+    const addressee = new Addressee({ address, email });
 
     await this.addresseesRepository.create(addressee);
   }
