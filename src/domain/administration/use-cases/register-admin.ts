@@ -1,4 +1,5 @@
 import { ConflictError } from '@/core/errors/conflict-error';
+import { Injectable } from '@nestjs/common';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { Admin } from '../entities/admin';
 import { Cpf } from '../entities/value-objects/cpf';
@@ -9,6 +10,7 @@ interface RegisterAdminUseCaseProps {
   password: string;
 }
 
+@Injectable()
 export class RegisterAdminUseCase {
   constructor(
     private adminsRepository: AdminsRepository,

@@ -7,8 +7,8 @@ interface AdminProps {
 }
 
 export class Admin extends Entity<AdminProps> {
-  constructor(props: AdminProps) {
-    super(props);
+  constructor(props: AdminProps, id?: string) {
+    super(props, id);
   }
 
   get cpf(): Cpf {
