@@ -1,5 +1,15 @@
+import { ConflictError } from '@/core/errors/conflict-error';
+import { InvalidCpfError } from '@/domain/administration/entities/errors/invalid-cpf';
 import { RegisterAdminUseCase } from '@/domain/administration/use-cases/register-admin';
-import { Body, Controller, HttpCode, Post, UsePipes } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  ConflictException,
+  Controller,
+  HttpCode,
+  Post,
+  UsePipes,
+} from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 
@@ -18,6 +28,14 @@ export class RegisterAdminController {
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(registerAdminBodySchema))
   async handle(@Body() body: RegisterAdminBody) {
-    await this.registerAdminUseCase.execute(body);
+    try {
+      await this.registerAdminUseCase.execute(body);
+    } catch (err) {
+      if (err instanceof InvalidCpfError) {
+        throw new BadRequestException('Invalid CPF');
+      } else if (err instanceof ConflictError) {
+        throw new ConflictException('Admin already exists');
+      }
+    }
   }
 }
