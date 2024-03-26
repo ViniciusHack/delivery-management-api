@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { HashComparer } from '../cryptography/hashComparer';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { AdminsRepository } from '../repositories/admins-repository';
@@ -13,6 +14,7 @@ interface ChangeShipperPasswordUseCaseProps {
   oldPassword: string;
 }
 
+@Injectable()
 export class ChangeShipperPasswordUseCase {
   constructor(
     private shippersRepository: ShippersRepository,

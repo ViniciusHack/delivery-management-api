@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { AddresseesRepository } from '../repositories/addressees-repository';
 import { AdminsRepository } from '../repositories/admins-repository';
 
@@ -8,6 +9,7 @@ interface DeleteAddresseeUseCaseProps {
   addresseeId: string;
 }
 
+@Injectable()
 export class DeleteAddresseeUseCase {
   constructor(
     private addresseesRepository: AddresseesRepository,

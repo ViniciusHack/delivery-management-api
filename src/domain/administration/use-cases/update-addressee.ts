@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { Geocoder } from '../addresses/geocoder';
 import { Address } from '../entities/value-objects/address';
 import { AddresseesRepository } from '../repositories/addressees-repository';
@@ -17,6 +18,7 @@ interface UpdateAddresseeUseCaseProps {
   zipCode: string;
 }
 
+@Injectable()
 export class UpdateAddresseeUseCase {
   constructor(
     private addresseesRepository: AddresseesRepository,

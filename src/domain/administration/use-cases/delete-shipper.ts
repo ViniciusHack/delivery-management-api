@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { AdminsRepository } from '../repositories/admins-repository';
 import { ShippersRepository } from '../repositories/shippers-repository';
 
@@ -8,6 +9,7 @@ interface DeleteShipperUseCaseProps {
   shipperId: string;
 }
 
+@Injectable()
 export class DeleteShipperUseCase {
   constructor(
     private shippersRepository: ShippersRepository,

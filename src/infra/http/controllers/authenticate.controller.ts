@@ -1,9 +1,12 @@
 import { AuthenticateUseCase } from '@/domain/administration/use-cases/authenticate';
 import { InvalidCredentialsError } from '@/domain/administration/use-cases/errors/invalid-credentials';
+import { Public } from '@/infra/auth/public';
 import {
   BadRequestException,
   Body,
   Controller,
+  ForbiddenException,
+  HttpCode,
   Post,
   UsePipes,
 } from '@nestjs/common';
@@ -17,20 +20,27 @@ const authenticateBodySchema = z.object({
 
 type AuthenticateBody = z.infer<typeof authenticateBodySchema>;
 
+@Public()
 @Controller('/sessions')
-export class Authenticate {
+export class AuthenticateController {
   constructor(private authenticateUseCase: AuthenticateUseCase) {}
 
   @Post()
+  @HttpCode(201)
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handle(@Body() body: AuthenticateBody) {
     try {
-      await this.authenticateUseCase.execute(body);
+      const { token } = await this.authenticateUseCase.execute(body);
+
+      return {
+        token,
+      };
     } catch (error) {
       if (error instanceof InvalidCredentialsError) {
-        throw new BadRequestException('Invalid credentials');
+        throw new ForbiddenException('Invalid credentials');
       }
-      throw new BadRequestException('Invalid credentials');
+      console.log(error);
+      throw new BadRequestException('Unexpected error');
     }
   }
 }

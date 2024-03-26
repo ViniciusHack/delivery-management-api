@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { Order } from '../entities/order';
 import { AddresseesRepository } from '../repositories/addressees-repository';
 import { AdminsRepository } from '../repositories/admins-repository';
@@ -10,6 +11,7 @@ interface RegisterOrderUseCaseProps {
   adminId: string;
 }
 
+@Injectable()
 export class RegisterOrderUseCase {
   constructor(
     private ordersRepository: OrdersRepository,

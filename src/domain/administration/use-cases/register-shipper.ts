@@ -1,5 +1,6 @@
 import { ConflictError } from '@/core/errors/conflict-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 import { HashGenerator } from '../cryptography/hashGenerator';
 import { Shipper } from '../entities/shipper';
 import { Cpf } from '../entities/value-objects/cpf';
@@ -12,6 +13,7 @@ interface RegisterShipperUseCaseProps {
   adminId: string;
 }
 
+@Injectable()
 export class RegisterShipperUseCase {
   constructor(
     private shippersRepository: ShippersRepository,

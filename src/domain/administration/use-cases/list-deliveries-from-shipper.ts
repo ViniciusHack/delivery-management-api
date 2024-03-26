@@ -1,4 +1,5 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 import { Order } from '../entities/order';
 import { AdminsRepository } from '../repositories/admins-repository';
 import { OrdersRepository } from '../repositories/orders-repository';
@@ -11,6 +12,7 @@ interface ListDeliveriesFromShipperUseCaseProps {
   perPage?: number;
 }
 
+@Injectable()
 export class ListDeliveriesFromShipperUseCase {
   constructor(
     private ordersRepository: OrdersRepository,

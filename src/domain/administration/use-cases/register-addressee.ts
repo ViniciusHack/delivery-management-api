@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists';
+import { Injectable } from '@nestjs/common';
 import { Geocoder } from '../addresses/geocoder';
 import { Addressee } from '../entities/addressee';
 import { Address } from '../entities/value-objects/address';
@@ -18,6 +19,7 @@ interface RegisterAddresseeUseCaseProps {
   email: string;
 }
 
+@Injectable()
 export class RegisterAddresseeUseCase {
   constructor(
     private addresseesRepository: AddresseesRepository,

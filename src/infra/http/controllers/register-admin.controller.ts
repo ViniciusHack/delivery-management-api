@@ -1,6 +1,7 @@
 import { ConflictError } from '@/core/errors/conflict-error';
 import { InvalidCpfError } from '@/domain/administration/entities/errors/invalid-cpf';
 import { RegisterAdminUseCase } from '@/domain/administration/use-cases/register-admin';
+import { Public } from '@/infra/auth/public';
 import {
   BadRequestException,
   Body,
@@ -20,6 +21,7 @@ const registerAdminBodySchema = z.object({
 
 type RegisterAdminBody = z.infer<typeof registerAdminBodySchema>;
 
+@Public()
 @Controller('/admins')
 export class RegisterAdminController {
   constructor(private registerAdminUseCase: RegisterAdminUseCase) {}

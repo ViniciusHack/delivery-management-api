@@ -1,4 +1,5 @@
 import { permissions } from '@/core/permissions';
+import { Injectable } from '@nestjs/common';
 import { Encrypter } from '../cryptography/encrypter';
 import { HashComparer } from '../cryptography/hashComparer';
 import { Shipper } from '../entities/shipper';
@@ -12,6 +13,7 @@ interface AuthenticateUseCaseProps {
   password: string;
 }
 
+@Injectable()
 export class AuthenticateUseCase {
   constructor(
     private adminsRepository: AdminsRepository,

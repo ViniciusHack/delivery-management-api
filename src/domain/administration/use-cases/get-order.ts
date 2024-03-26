@@ -1,4 +1,5 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { Order } from '../entities/order';
 import { OrdersRepository } from '../repositories/orders-repository';
 
@@ -6,6 +7,7 @@ interface GetOrderUseCaseProps {
   orderId: string;
 }
 
+@Injectable()
 export class GetOrderUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 

@@ -1,5 +1,6 @@
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { AdminsRepository } from '../repositories/admins-repository';
 import { OrdersRepository } from '../repositories/orders-repository';
 
@@ -8,6 +9,7 @@ interface DeleteOrderUseCaseProps {
   orderId: string;
 }
 
+@Injectable()
 export class DeleteOrderUseCase {
   constructor(
     private ordersRepository: OrdersRepository,
