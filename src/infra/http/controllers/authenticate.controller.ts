@@ -26,7 +26,7 @@ export class AuthenticateController {
   constructor(private authenticateUseCase: AuthenticateUseCase) {}
 
   @Post()
-  @HttpCode(201)
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handle(@Body() body: AuthenticateBody) {
     try {
