@@ -28,6 +28,7 @@ export class ListShippersUseCase {
       throw new NotAllowedError();
     }
 
+    console.log({ page, perPage });
     const shippers = await this.shippersRepository.findMany({
       page,
       perPage,

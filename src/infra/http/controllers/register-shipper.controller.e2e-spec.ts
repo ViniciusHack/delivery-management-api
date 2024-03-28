@@ -49,7 +49,6 @@ describe(`Register shipper (E2E)`, () => {
         cpf: '004.247.709-38',
         password: '123456',
       });
-    console.log(response);
 
     expect(response.statusCode).toBe(201);
 

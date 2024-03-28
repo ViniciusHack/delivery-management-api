@@ -17,7 +17,7 @@ export function makeAdmin(override?: Partial<Admin>): Admin {
 export class AdminFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaAdmin(data: Partial<Admin>) {
+  async makePrismaAdmin(data?: Partial<Admin>) {
     const admin = makeAdmin(data);
 
     await this.prisma.user.create({

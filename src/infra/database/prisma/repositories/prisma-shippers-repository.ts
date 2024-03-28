@@ -39,6 +39,9 @@ export class PrismaShippersRepository implements ShippersRepository {
       },
       take: perPage,
       skip: (page - 1) * perPage,
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
 
     return shippers.map(PrismaShipperMapper.toDomain);
@@ -54,6 +57,7 @@ export class PrismaShippersRepository implements ShippersRepository {
     await this.prisma.user.update({
       where: {
         id: shipper.id,
+        role: Role.Shipper,
       },
       data: PrismaShipperMapper.toPersistence(shipper),
     });
@@ -63,6 +67,7 @@ export class PrismaShippersRepository implements ShippersRepository {
     await this.prisma.user.delete({
       where: {
         id,
+        role: Role.Shipper,
       },
     });
   }
