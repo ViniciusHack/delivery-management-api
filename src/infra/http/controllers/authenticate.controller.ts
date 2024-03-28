@@ -39,7 +39,6 @@ export class AuthenticateController {
       if (error instanceof InvalidCredentialsError) {
         throw new ForbiddenException('Invalid credentials');
       }
-      console.log(error);
       throw new BadRequestException('Unexpected error');
     }
   }

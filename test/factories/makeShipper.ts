@@ -20,7 +20,6 @@ export class ShipperFactory {
   async makePrismaShipper(data?: Partial<Shipper>) {
     const shipper = makeShipper(data);
 
-    console.log({ shipperCpf: shipper.cpf });
     await this.prisma.user.create({
       data: PrismaShipperMapper.toPersistence(shipper),
     });
