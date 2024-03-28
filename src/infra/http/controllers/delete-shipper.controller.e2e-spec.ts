@@ -10,12 +10,12 @@ import request from 'supertest';
 import { AdminFactory } from 'test/factories/makeAdmin';
 import { ShipperFactory } from 'test/factories/makeShipper';
 
-describe(`List shippers (E2E)`, () => {
+describe(`Register shipper (E2E)`, () => {
   let app: INestApplication;
   let adminFactory: AdminFactory;
-  let shipperFactory: ShipperFactory;
   let prisma: PrismaService;
   let jwtService: JwtService;
+  let shipperFactory: ShipperFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -32,44 +32,32 @@ describe(`List shippers (E2E)`, () => {
     await app.init();
   });
 
-  test('[GET] /shippers', async () => {
-    const admin = await adminFactory.makePrismaAdmin();
+  test('[POST] /shippers', async () => {
+    const admin = await adminFactory.makePrismaAdmin({
+      cpf: new Cpf('85344414056'),
+    });
 
     const token = jwtService.sign({
       sub: admin.id,
       role: Role.Admin,
     });
 
-    const shipper1 = await shipperFactory.makePrismaShipper({
-      cpf: new Cpf('58574881090'),
-    });
-
-    await Promise.all([
-      shipperFactory.makePrismaShipper({
-        cpf: new Cpf('85344414056'),
-      }),
-      shipperFactory.makePrismaShipper({
-        cpf: new Cpf('64944247087'),
-      }),
-    ]);
-
-    const perPage = 2;
+    const shipper = await shipperFactory.makePrismaShipper();
 
     const response = await request(app.getHttpServer())
-      .get(`/shippers?perPage=${perPage}`)
+      .delete(`/shippers/${shipper.id}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
-    expect(response.body.shippers).toHaveLength(perPage);
+    expect(response.statusCode).toBe(200);
 
-    expect(response.body.shippers).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          id: shipper1.id,
-          cpf: '585.748.810-90',
-          createdAt: expect.any(String),
-        }),
-      ]),
-    );
+    const shipperOnDatabase = await prisma.user.findUnique({
+      where: {
+        id: shipper.id,
+        role: Role.Shipper,
+      },
+    });
+
+    expect(shipperOnDatabase).toBeNull();
   });
 });

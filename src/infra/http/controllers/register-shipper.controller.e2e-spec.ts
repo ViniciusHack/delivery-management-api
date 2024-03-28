@@ -46,7 +46,7 @@ describe(`Register shipper (E2E)`, () => {
       .post('/shippers')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        cpf: '004.247.709-38',
+        cpf: '853.444.140-56',
         password: '123456',
       });
 
@@ -54,7 +54,7 @@ describe(`Register shipper (E2E)`, () => {
 
     const shipperOnDatabase = await prisma.user.findUnique({
       where: {
-        cpf: '004.247.709-38',
+        cpf: '853.444.140-56',
         role: Role.Shipper,
       },
     });
