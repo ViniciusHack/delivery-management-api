@@ -1,3 +1,4 @@
+import { Role } from '@/core/permissions';
 import { Admin } from '@/domain/administration/entities/admin';
 import { Cpf } from '@/domain/administration/entities/value-objects/cpf';
 import { AdminsRepository } from '@/domain/administration/repositories/admins-repository';
@@ -12,7 +13,7 @@ export class PrismaAdminsRepository implements AdminsRepository {
     const admin = await this.prisma.user.findUnique({
       where: {
         cpf: cpf.toString(),
-        role: 'ADMIN',
+        role: Role.Admin,
       },
     });
 
@@ -23,7 +24,7 @@ export class PrismaAdminsRepository implements AdminsRepository {
     const admin = await this.prisma.user.findUnique({
       where: {
         id,
-        role: 'ADMIN',
+        role: Role.Admin,
       },
     });
 

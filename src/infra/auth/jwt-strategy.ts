@@ -1,3 +1,4 @@
+import { Role } from '@/core/permissions';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -6,6 +7,7 @@ import { EnvService } from '../env/env.service';
 
 const tokenPayloadSchema = z.object({
   sub: z.string().uuid(),
+  role: z.enum([Role.Admin, Role.Shipper]),
 });
 
 export type UserPayload = z.infer<typeof tokenPayloadSchema>;

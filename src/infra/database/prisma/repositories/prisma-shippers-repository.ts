@@ -1,3 +1,4 @@
+import { Role } from '@/core/permissions';
 import { PaginationParams } from '@/core/utils';
 import { Shipper } from '@/domain/administration/entities/shipper';
 import { Cpf } from '@/domain/administration/entities/value-objects/cpf';
@@ -13,7 +14,7 @@ export class PrismaShippersRepository implements ShippersRepository {
     const shipper = await this.prisma.user.findUnique({
       where: {
         cpf: cpf.toString(),
-        role: 'SHIPPER',
+        role: Role.Shipper,
       },
     });
 
@@ -24,7 +25,7 @@ export class PrismaShippersRepository implements ShippersRepository {
     const shipper = await this.prisma.user.findUnique({
       where: {
         id,
-        role: 'SHIPPER',
+        role: Role.Shipper,
       },
     });
 
@@ -34,7 +35,7 @@ export class PrismaShippersRepository implements ShippersRepository {
   async findMany({ page, perPage }: PaginationParams) {
     const shippers = await this.prisma.user.findMany({
       where: {
-        role: 'SHIPPER',
+        role: Role.Shipper,
       },
       take: perPage,
       skip: (page - 1) * perPage,

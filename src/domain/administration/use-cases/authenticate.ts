@@ -1,4 +1,4 @@
-import { permissions } from '@/core/permissions';
+import { Role } from '@/core/permissions';
 import { Injectable } from '@nestjs/common';
 import { Encrypter } from '../cryptography/encrypter';
 import { HashComparer } from '../cryptography/hashComparer';
@@ -30,7 +30,6 @@ export class AuthenticateUseCase {
     let payload = {
       sub: '',
       role: '',
-      permissions: [''],
     };
     let shipper: Shipper | null = null;
 
@@ -53,8 +52,7 @@ export class AuthenticateUseCase {
 
     payload = {
       sub: admin?.id ?? shipper?.id ?? '',
-      role: admin ? 'admin' : 'shipper',
-      permissions: admin ? permissions.admin : permissions.shipper,
+      role: admin ? Role.Admin : Role.Shipper,
     };
 
     const token = await this.encrypter.encrypt(payload);

@@ -7,6 +7,7 @@ export class ZodValidationPipe implements PipeTransform {
 
   transform(value: any) {
     try {
+      console.log(value);
       return this.schema.parse(value);
     } catch (error) {
       if (error instanceof ZodError) {

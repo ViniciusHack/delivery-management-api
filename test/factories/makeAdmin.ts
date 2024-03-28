@@ -23,5 +23,7 @@ export class AdminFactory {
     await this.prisma.user.create({
       data: PrismaAdminMapper.toPersistence(admin),
     });
+
+    return admin;
   }
 }

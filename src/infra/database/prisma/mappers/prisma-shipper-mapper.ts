@@ -1,3 +1,4 @@
+import { Role } from '@/core/permissions';
 import { Shipper } from '@/domain/administration/entities/shipper';
 import { Cpf } from '@/domain/administration/entities/value-objects/cpf';
 import { Prisma, User } from '@prisma/client';
@@ -18,7 +19,7 @@ export class PrismaShipperMapper {
       id: shipper.id,
       cpf: shipper.cpf.toString(),
       password: shipper.password,
-      role: 'SHIPPER',
+      role: Role.Shipper,
     };
   }
 }

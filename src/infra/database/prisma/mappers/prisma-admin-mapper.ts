@@ -1,3 +1,4 @@
+import { Role } from '@/core/permissions';
 import { Admin } from '@/domain/administration/entities/admin';
 import { Cpf } from '@/domain/administration/entities/value-objects/cpf';
 import { Prisma, User } from '@prisma/client';
@@ -18,7 +19,7 @@ export class PrismaAdminMapper {
       id: admin.id,
       cpf: admin.cpf.toString(),
       password: admin.password,
-      role: 'ADMIN',
+      role: Role.Admin,
     };
   }
 }

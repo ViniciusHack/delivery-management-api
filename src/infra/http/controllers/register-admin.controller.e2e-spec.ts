@@ -1,4 +1,5 @@
 import { AppModule } from '@/app.module';
+import { Role } from '@/core/permissions';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
@@ -30,7 +31,7 @@ describe('Register Admin (E2E)', () => {
     const admin = await prisma.user.findUnique({
       where: {
         cpf: '123.456.789-09',
-        role: 'ADMIN',
+        role: Role.Admin,
       },
     });
 

@@ -1,4 +1,4 @@
-import { permissions } from '@/core/permissions';
+import { Role } from '@/core/permissions';
 import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
 import { FakeHashComparer } from 'test/cryptography/fake-hash-comparer';
 import { makeAdmin } from 'test/factories/makeAdmin';
@@ -39,9 +39,8 @@ describe('Authenticate', () => {
 
     expect(JSON.parse(result.token)).toEqual(
       expect.objectContaining({
-        role: 'admin',
+        role: Role.Admin,
         sub: admin.id,
-        permissions: permissions.admin,
       }),
     );
   });
@@ -57,9 +56,8 @@ describe('Authenticate', () => {
 
     expect(JSON.parse(result.token)).toEqual(
       expect.objectContaining({
-        role: 'shipper',
+        role: Role.Shipper,
         sub: shipper.id,
-        permissions: permissions.shipper,
       }),
     );
   });
