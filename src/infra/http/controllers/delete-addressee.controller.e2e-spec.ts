@@ -7,32 +7,32 @@ import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
+import { AddresseeFactory } from 'test/factories/makeAddressee';
 import { AdminFactory } from 'test/factories/makeAdmin';
-import { ShipperFactory } from 'test/factories/makeShipper';
 
-describe(`Delete shipper (E2E)`, () => {
+describe(`Delete addressee (E2E)`, () => {
   let app: INestApplication;
   let adminFactory: AdminFactory;
   let prisma: PrismaService;
   let jwtService: JwtService;
-  let shipperFactory: ShipperFactory;
+  let addresseeFactory: AddresseeFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [AdminFactory, ShipperFactory],
+      providers: [AdminFactory, AddresseeFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();
     adminFactory = moduleRef.get(AdminFactory);
-    shipperFactory = moduleRef.get(ShipperFactory);
+    addresseeFactory = moduleRef.get(AddresseeFactory);
     prisma = moduleRef.get(PrismaService);
     jwtService = moduleRef.get(JwtService);
 
     await app.init();
   });
 
-  test('[DELETE] /shippers', async () => {
+  test('[DELETE] /addressees', async () => {
     const admin = await adminFactory.makePrismaAdmin({
       cpf: new Cpf('85344414056'),
     });
@@ -42,22 +42,21 @@ describe(`Delete shipper (E2E)`, () => {
       role: Role.Admin,
     });
 
-    const shipper = await shipperFactory.makePrismaShipper();
+    const addressee = await addresseeFactory.makePrismaAddressee();
 
     const response = await request(app.getHttpServer())
-      .delete(`/shippers/${shipper.id}`)
+      .delete(`/addressees/${addressee.id}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
     expect(response.statusCode).toBe(200);
 
-    const shipperOnDatabase = await prisma.user.findUnique({
+    const addresseeOnDatabase = await prisma.addressee.findUnique({
       where: {
-        id: shipper.id,
-        role: Role.Shipper,
+        id: addressee.id,
       },
     });
 
-    expect(shipperOnDatabase).toBeNull();
+    expect(addresseeOnDatabase).toBeNull();
   });
 });
