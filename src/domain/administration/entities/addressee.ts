@@ -7,8 +7,8 @@ interface AddresseeProps {
 }
 
 export class Addressee extends Entity<AddresseeProps> {
-  constructor(props: AddresseeProps) {
-    super(props);
+  constructor(props: AddresseeProps, id?: string) {
+    super(props, id);
   }
 
   get address(): Address {
