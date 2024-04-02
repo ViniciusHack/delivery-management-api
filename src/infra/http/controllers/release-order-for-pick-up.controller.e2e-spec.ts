@@ -10,7 +10,7 @@ import { AddresseeFactory } from 'test/factories/makeAddressee';
 import { AdminFactory } from 'test/factories/makeAdmin';
 import { OrderFactory } from 'test/factories/makeOrder';
 
-describe(`Delete order (E2E)`, () => {
+describe(`Release order (E2E)`, () => {
   let app: INestApplication;
   let adminFactory: AdminFactory;
   let orderFactory: OrderFactory;
@@ -34,7 +34,7 @@ describe(`Delete order (E2E)`, () => {
     await app.init();
   });
 
-  test('[DELETE] /order/:id', async () => {
+  test('[PATCH] /order/:id', async () => {
     const admin = await adminFactory.makePrismaAdmin();
 
     const token = jwtService.sign({
@@ -49,7 +49,7 @@ describe(`Delete order (E2E)`, () => {
     });
 
     const response = await request(app.getHttpServer())
-      .delete(`/orders/${order.id}`)
+      .patch(`/orders/${order.id}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
@@ -60,6 +60,6 @@ describe(`Delete order (E2E)`, () => {
         addresseeId: addressee.id,
       },
     });
-    expect(orderOnDatabase).toBeNull();
+    expect(orderOnDatabase?.stage).toEqual('WAITING');
   });
 });
