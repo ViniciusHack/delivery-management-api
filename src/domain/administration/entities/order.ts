@@ -15,13 +15,13 @@ interface OrderProps {
   shipperId?: string;
   addresseeId: string;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
   // createdBy?
 }
 
 export class Order extends AggregateRoot<OrderProps> {
-  constructor(props: Optional<OrderProps, 'stage' | 'createdAt'>) {
-    super({ stage: 'IN_ANALYSIS', createdAt: new Date(), ...props });
+  constructor(props: Optional<OrderProps, 'stage' | 'createdAt'>, id?: string) {
+    super({ stage: 'IN_ANALYSIS', createdAt: new Date(), ...props }, id);
   }
 
   get stage(): Stage {
@@ -49,7 +49,7 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.createdAt;
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date | undefined | null {
     return this.props.updatedAt;
   }
 

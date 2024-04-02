@@ -55,14 +55,14 @@ enum OrderStage {
 
 model Order {
   id          String     @id @default(uuid())
-  shipperId   String     @map("shipper_id")
+  shipperId   String?    @map("shipper_id")
   addresseeId String     @map("addressee_id")
   stage       OrderStage
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
-  shipper   User      @relation(fields: [shipperId], references: [id])
+  shipper   User?     @relation(fields: [shipperId], references: [id])
   addressee Addressee @relation(fields: [addresseeId], references: [id])
   photo     Photo?
 

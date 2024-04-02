@@ -6,6 +6,7 @@ import { DeleteShipperUseCase } from '@/domain/administration/use-cases/delete-s
 import { ListShippersUseCase } from '@/domain/administration/use-cases/list-shippers';
 import { RegisterAddresseeUseCase } from '@/domain/administration/use-cases/register-addressee';
 import { RegisterAdminUseCase } from '@/domain/administration/use-cases/register-admin';
+import { RegisterOrderUseCase } from '@/domain/administration/use-cases/register-order';
 import { RegisterShipperUseCase } from '@/domain/administration/use-cases/register-shipper';
 import { UpdateAddresseeUseCase } from '@/domain/administration/use-cases/update-addressee';
 import { Module } from '@nestjs/common';
@@ -20,6 +21,7 @@ import { DeleteShipperController } from './controllers/delete-shipper.controller
 import { ListShippersController } from './controllers/list-shippers.controller';
 import { RegisterAddresseeController } from './controllers/register-addressee.controller';
 import { RegisterAdminController } from './controllers/register-admin.controller';
+import { RegisterOrderController } from './controllers/register-order.controller';
 import { RegisterShipperController } from './controllers/register-shipper.controller';
 import { UpdateAddresseeController } from './controllers/update-addressee.controller';
 
@@ -36,6 +38,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     RegisterAddresseeController,
     DeleteAddresseeController,
     UpdateAddresseeController,
+    RegisterOrderController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -48,6 +51,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     RegisterAddresseeUseCase,
     DeleteAddresseeUseCase,
     UpdateAddresseeUseCase,
+    RegisterOrderUseCase,
   ],
 })
 export class HttpModule {}
