@@ -5,6 +5,7 @@ import { DeleteAddresseeUseCase } from '@/domain/administration/use-cases/delete
 import { DeleteOrderUseCase } from '@/domain/administration/use-cases/delete-order';
 import { DeleteShipperUseCase } from '@/domain/administration/use-cases/delete-shipper';
 import { GetOrderUseCase } from '@/domain/administration/use-cases/get-order';
+import { ListDeliveriesFromShipperUseCase } from '@/domain/administration/use-cases/list-deliveries-from-shipper';
 import { ListShippersUseCase } from '@/domain/administration/use-cases/list-shippers';
 import { RegisterAddresseeUseCase } from '@/domain/administration/use-cases/register-addressee';
 import { RegisterAdminUseCase } from '@/domain/administration/use-cases/register-admin';
@@ -23,6 +24,7 @@ import { DeleteAddresseeController } from './controllers/delete-addressee.contro
 import { DeleteOrderController } from './controllers/delete-order.controller';
 import { DeleteShipperController } from './controllers/delete-shipper.controller.';
 import { GetOrderController } from './controllers/get-order.controller';
+import { ListDeliveriesFromShipperController } from './controllers/list-deliveries-from-shipper.controller';
 import { ListShippersController } from './controllers/list-shippers.controller';
 import { RegisterAddresseeController } from './controllers/register-addressee.controller';
 import { RegisterAdminController } from './controllers/register-admin.controller';
@@ -48,6 +50,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     GetOrderController,
     DeleteOrderController,
     ReleaseOrderForPickUpController,
+    ListDeliveriesFromShipperController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -64,6 +67,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     GetOrderUseCase,
     DeleteOrderUseCase,
     ReleaseOrderForPickUpUseCase,
+    ListDeliveriesFromShipperUseCase,
   ],
 })
 export class HttpModule {}

@@ -1,9 +1,40 @@
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { z } from 'zod';
+
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 export type PaginationParams = {
   page: number;
   perPage: number;
 };
+
+const pageQueryValidationSchema = z
+  .string()
+  .optional()
+  .default('1')
+  .transform(Number)
+  .pipe(z.number().min(1));
+
+const perPageQueryValidationSchema = z
+  .string()
+  .optional()
+  .default('20')
+  .transform(Number)
+  .pipe(z.number().min(1));
+
+export type PageQueryParamSchema = z.infer<typeof pageQueryValidationSchema>;
+
+export const pageQueryValidationPipe = new ZodValidationPipe(
+  pageQueryValidationSchema,
+);
+
+export type PerPageQueryParamSchema = z.infer<
+  typeof perPageQueryValidationSchema
+>;
+
+export const perPageQueryValidationPipe = new ZodValidationPipe(
+  perPageQueryValidationSchema,
+);
 
 interface Coordinate {
   latitude: number;

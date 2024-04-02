@@ -5,9 +5,9 @@
 [ X ] Deve ser possível alterar a senha de um usuário
 [ X ] Deve ser possível realizar o CRUD dos entregadores
 [ X ] Deve ser possível realizar o CRUD das encomendas
+[ X ] Deve ser possível realizar o CRUD dos destinatários
 [ X ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 [ X ] Deve ser possível listar as entregas de um usuário
-[ X ] Deve ser possível realizar o CRUD dos destinatários
 [ X ] Deve ser possível retirar uma encomenda
 [ X ] Deve ser possível marcar uma encomenda como entregue
 [ X ] Deve ser possível marcar uma encomenda como devolvida
