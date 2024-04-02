@@ -36,18 +36,7 @@ describe('Order Entity', () => {
       updatedAt: new Date(),
     });
 
-    const deliveredDate = order.getDeliveredDate();
-    expect(deliveredDate).toBeInstanceOf(Date);
-  });
-
-  it('should not be able to get the delivered date of an order if it`s not delivered yet', () => {
-    const order = new Order({
-      addresseeId: '123',
-    });
-
-    expect(() => order.getDeliveredDate()).toThrowError(
-      'Order is not delivered yet',
-    );
+    expect(order.deliveryDate).toBeInstanceOf(Date);
   });
 
   it('should not be able to get the delivered date of an Order if it has no updated date', () => {
@@ -57,8 +46,6 @@ describe('Order Entity', () => {
       createdAt: new Date(),
     });
 
-    expect(() => order.getDeliveredDate()).toThrowError(
-      'Order has no updated date',
-    );
+    expect(() => order.deliveryDate).toThrowError('Order has no updated date');
   });
 });

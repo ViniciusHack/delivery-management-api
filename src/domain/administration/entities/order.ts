@@ -1,6 +1,5 @@
 import { AggregateRoot } from '@/core/aggregate-root';
 import { Optional } from '@/core/utils';
-import { OrderNotDeliveredError } from './errors/order-not-devlivered';
 import { OrderNotWaitingToBePickedUpError } from './errors/order-not-waiting-to-be-picked-up';
 
 type Stage =
@@ -53,9 +52,9 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.updatedAt;
   }
 
-  public getDeliveredDate(): Date {
+  get deliveryDate(): Date | null {
     if (this.props.stage !== 'DELIVERED') {
-      throw new OrderNotDeliveredError();
+      return null;
     } else if (!this.props.updatedAt) {
       throw new Error('Order has no updated date');
     }

@@ -28,3 +28,4 @@
 
 [   ] Domain events
 [   ] Infra
+[   ] Order with addressee (details)
