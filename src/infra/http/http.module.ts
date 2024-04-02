@@ -2,6 +2,7 @@ import { AuthenticateUseCase } from '@/domain/administration/use-cases/authentic
 import { ChangeAdminPasswordUseCase } from '@/domain/administration/use-cases/change-admin-password';
 import { ChangeShipperPasswordUseCase } from '@/domain/administration/use-cases/change-shipper-password';
 import { DeleteAddresseeUseCase } from '@/domain/administration/use-cases/delete-addressee';
+import { DeleteOrderUseCase } from '@/domain/administration/use-cases/delete-order';
 import { DeleteShipperUseCase } from '@/domain/administration/use-cases/delete-shipper';
 import { GetOrderUseCase } from '@/domain/administration/use-cases/get-order';
 import { ListShippersUseCase } from '@/domain/administration/use-cases/list-shippers';
@@ -18,6 +19,7 @@ import { AuthenticateController } from './controllers/authenticate.controller';
 import { ChangeAdminPasswordController } from './controllers/change-admin-password.controller';
 import { ChangeShipperPasswordController } from './controllers/change-shipper-password.controller';
 import { DeleteAddresseeController } from './controllers/delete-addressee.controller';
+import { DeleteOrderController } from './controllers/delete-order.controller';
 import { DeleteShipperController } from './controllers/delete-shipper.controller.';
 import { GetOrderController } from './controllers/get-order.controller';
 import { ListShippersController } from './controllers/list-shippers.controller';
@@ -42,6 +44,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     UpdateAddresseeController,
     RegisterOrderController,
     GetOrderController,
+    DeleteOrderController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -56,6 +59,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     UpdateAddresseeUseCase,
     RegisterOrderUseCase,
     GetOrderUseCase,
+    DeleteOrderUseCase,
   ],
 })
 export class HttpModule {}
