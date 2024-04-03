@@ -1,4 +1,5 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { DeliveriesRepository } from '../repositories/deliveries-repository';
 import { ShippersRepository } from '../repositories/shippers-repository';
 
@@ -7,6 +8,7 @@ interface PickUpDeliveryUseCaseProps {
   shipperId: string;
 }
 
+@Injectable()
 export class PickUpDeliveryUseCase {
   constructor(
     private deliveriesRepository: DeliveriesRepository,

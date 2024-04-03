@@ -7,12 +7,13 @@ import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { AddresseeFactory } from 'test/factories/makeAddressee';
-import { AdminFactory } from 'test/factories/makeAdmin';
-import { OrderFactory } from 'test/factories/makeOrder';
 
-describe(`Release order (E2E)`, () => {
+import { OrderFactory } from 'test/factories/makeOrder';
+import { ShipperFactory } from 'test/factories/makeShipper';
+
+describe(`Pick up delivery (E2E)`, () => {
   let app: INestApplication;
-  let adminFactory: AdminFactory;
+  let shipperFactory: ShipperFactory;
   let orderFactory: OrderFactory;
   let addresseeFactory: AddresseeFactory;
   let prisma: PrismaService;
@@ -21,12 +22,12 @@ describe(`Release order (E2E)`, () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [AdminFactory, OrderFactory, AddresseeFactory],
+      providers: [ShipperFactory, OrderFactory, AddresseeFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
-    adminFactory = moduleRef.get(AdminFactory);
+    shipperFactory = moduleRef.get(ShipperFactory);
     addresseeFactory = moduleRef.get(AddresseeFactory);
     orderFactory = moduleRef.get(OrderFactory);
     jwtService = moduleRef.get(JwtService);
@@ -34,22 +35,23 @@ describe(`Release order (E2E)`, () => {
     await app.init();
   });
 
-  test('[PATCH] /order/:id/release', async () => {
-    const admin = await adminFactory.makePrismaAdmin();
+  test('[PATCH] /deliveries/:id/pick-up', async () => {
+    const shipper = await shipperFactory.makePrismaShipper();
 
     const token = jwtService.sign({
-      sub: admin.id,
-      role: Role.Admin,
+      sub: shipper.id,
+      role: Role.Shipper,
     });
 
     const addressee = await addresseeFactory.makePrismaAddressee();
 
     const order = await orderFactory.makePrismaOrder({
       addresseeId: addressee.id,
+      stage: 'WAITING',
     });
 
     const response = await request(app.getHttpServer())
-      .patch(`/orders/${order.id}/release`)
+      .patch(`/deliveries/${order.id}/pick-up`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
@@ -60,6 +62,6 @@ describe(`Release order (E2E)`, () => {
         addresseeId: addressee.id,
       },
     });
-    expect(orderOnDatabase?.stage).toEqual('WAITING');
+    expect(orderOnDatabase?.stage).toEqual('ON_THE_WAY');
   });
 });

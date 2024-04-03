@@ -2,7 +2,7 @@ import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 import { Role } from '@/core/permissions';
-import { ReleaseOrderForPickUpUseCase } from '@/domain/administration/use-cases/release-order-for-pick-up';
+import { PickUpDeliveryUseCase } from '@/domain/deliveries/use-cases/pick-up-delivery';
 
 import { CurrentUser } from '@/infra/auth/current-user';
 import { UserPayload } from '@/infra/auth/jwt-strategy';
@@ -16,20 +16,18 @@ import {
   Patch,
 } from '@nestjs/common';
 
-@Controller('/orders/:id/release')
-export class ReleaseOrderForPickUpController {
-  constructor(
-    private releaseOrderForPickUpUseCase: ReleaseOrderForPickUpUseCase,
-  ) {}
+@Controller('/deliveries/:id/pick-up')
+export class PickUpDeliveryController {
+  constructor(private pickUpDeliveryUseCase: PickUpDeliveryUseCase) {}
 
   @Patch()
   @HttpCode(204)
-  @Roles(Role.Admin)
+  @Roles(Role.Shipper)
   async handle(@Param('id') id: string, @CurrentUser() user: UserPayload) {
     try {
-      await this.releaseOrderForPickUpUseCase.execute({
-        orderId: id,
-        adminId: user.sub,
+      await this.pickUpDeliveryUseCase.execute({
+        deliveryId: id,
+        shipperId: user.sub,
       });
     } catch (err) {
       if (err instanceof NotAllowedError) {

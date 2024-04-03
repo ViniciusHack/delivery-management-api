@@ -35,7 +35,6 @@ export class ListDeliveriesFromShipperController {
     @CurrentUser() user: UserPayload,
   ) {
     try {
-      console.log({ user });
       const { deliveries } = await this.listShipperUseCase.execute({
         page,
         perPage,

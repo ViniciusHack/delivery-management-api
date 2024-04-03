@@ -9,7 +9,7 @@ interface DeliveryProps {
   stage: Stage; // Value Object?
   shipperId?: string;
   addresseeId: string;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export class Delivery extends Entity<DeliveryProps> {
