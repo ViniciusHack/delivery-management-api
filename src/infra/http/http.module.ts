@@ -14,6 +14,7 @@ import { RegisterShipperUseCase } from '@/domain/administration/use-cases/regist
 import { ReleaseOrderForPickUpUseCase } from '@/domain/administration/use-cases/release-order-for-pick-up';
 import { UpdateAddresseeUseCase } from '@/domain/administration/use-cases/update-addressee';
 import { PickUpDeliveryUseCase } from '@/domain/deliveries/use-cases/pick-up-delivery';
+import { ReturnDeliveryUseCase } from '@/domain/deliveries/use-cases/return-delivery';
 import { Module } from '@nestjs/common';
 import { AddressesModule } from '../addresses/addresses.module';
 import { CryptographyModule } from '../cryptography/cryptography.module';
@@ -33,6 +34,7 @@ import { RegisterAdminController } from './controllers/register-admin.controller
 import { RegisterOrderController } from './controllers/register-order.controller';
 import { RegisterShipperController } from './controllers/register-shipper.controller';
 import { ReleaseOrderForPickUpController } from './controllers/release-order-for-pick-up.controller';
+import { ReturnDeliveryController } from './controllers/return-delivery.controller';
 import { UpdateAddresseeController } from './controllers/update-addressee.controller';
 
 @Module({
@@ -54,6 +56,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     ReleaseOrderForPickUpController,
     ListDeliveriesFromShipperController,
     PickUpDeliveryController,
+    ReturnDeliveryController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -72,6 +75,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     ReleaseOrderForPickUpUseCase,
     ListDeliveriesFromShipperUseCase,
     PickUpDeliveryUseCase,
+    ReturnDeliveryUseCase,
   ],
 })
 export class HttpModule {}
