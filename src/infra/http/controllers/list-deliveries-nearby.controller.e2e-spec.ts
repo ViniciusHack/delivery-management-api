@@ -93,7 +93,6 @@ describe(`List deliveries nearby (E2E)`, () => {
       .set('Authorization', `Bearer ${token}`)
       .send();
 
-    console.log(response.body);
     expect(response.status).toBe(200);
     expect(response.body.deliveries).toHaveLength(1);
     expect(response.body.deliveries).toEqual([

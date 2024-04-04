@@ -11,8 +11,8 @@
 [ X ] Deve ser possível retirar uma encomenda
 [ X ] Deve ser possível marcar uma encomenda como devolvida
 [ X ] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
-[   ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 [   ] Deve ser possível marcar uma encomenda como entregue
+[   ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 ### Regras de negócio
 

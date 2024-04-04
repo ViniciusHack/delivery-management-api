@@ -6,11 +6,16 @@ import { PhotoAlreadyConfirmedError } from './errors/photo-already-confirmed';
 interface PhotoProps {
   deliveryId?: string;
   link: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export class Photo extends Entity<PhotoProps> {
-  constructor(props: Optional<PhotoProps, 'deliveryId'>, id?: string) {
-    super(props, id);
+  constructor(
+    props: Optional<PhotoProps, 'deliveryId' | 'createdAt'>,
+    id?: string,
+  ) {
+    super({ createdAt: new Date(), ...props }, id);
   }
 
   get deliveryId(): string | undefined {
@@ -21,10 +26,19 @@ export class Photo extends Entity<PhotoProps> {
     return this.props.link;
   }
 
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
+  }
+
   confirmPhoto(deliveryId: string): void {
     if (!!this.props.deliveryId) {
       throw new PhotoAlreadyConfirmedError();
     }
     this.props.deliveryId = deliveryId;
+    this.props.updatedAt = new Date();
   }
 }

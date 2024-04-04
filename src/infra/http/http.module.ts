@@ -16,10 +16,12 @@ import { UpdateAddresseeUseCase } from '@/domain/administration/use-cases/update
 import { ListDeliveriesNearbyUseCase } from '@/domain/deliveries/use-cases/list-deliveries-nearby';
 import { PickUpDeliveryUseCase } from '@/domain/deliveries/use-cases/pick-up-delivery';
 import { ReturnDeliveryUseCase } from '@/domain/deliveries/use-cases/return-delivery';
+import { UploadAndCreatePhotoUseCase } from '@/domain/deliveries/use-cases/upload-and-create-photo';
 import { Module } from '@nestjs/common';
 import { AddressesModule } from '../addresses/addresses.module';
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { DatabaseModule } from '../database/database.module';
+import { StorageModule } from '../storage/storage.module';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { ChangeAdminPasswordController } from './controllers/change-admin-password.controller';
 import { ChangeShipperPasswordController } from './controllers/change-shipper-password.controller';
@@ -38,9 +40,10 @@ import { RegisterShipperController } from './controllers/register-shipper.contro
 import { ReleaseOrderForPickUpController } from './controllers/release-order-for-pick-up.controller';
 import { ReturnDeliveryController } from './controllers/return-delivery.controller';
 import { UpdateAddresseeController } from './controllers/update-addressee.controller';
+import { UploadAndCreatePhotoController } from './controllers/upload-and-create-photo.controller';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, AddressesModule],
+  imports: [DatabaseModule, CryptographyModule, AddressesModule, StorageModule],
   controllers: [
     RegisterAdminController,
     AuthenticateController,
@@ -60,6 +63,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     PickUpDeliveryController,
     ReturnDeliveryController,
     ListDeliveriesNearbyController,
+    UploadAndCreatePhotoController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -80,6 +84,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     PickUpDeliveryUseCase,
     ReturnDeliveryUseCase,
     ListDeliveriesNearbyUseCase,
+    UploadAndCreatePhotoUseCase,
   ],
 })
 export class HttpModule {}

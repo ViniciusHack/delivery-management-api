@@ -40,7 +40,6 @@ export class ListDeliveriesNearbyController {
         shipperLatitude: latitude,
         shipperLongitude: longitude,
       });
-      console.log({ deliveries });
 
       return {
         deliveries: deliveries.map((delivery) =>
