@@ -13,6 +13,7 @@ import { RegisterOrderUseCase } from '@/domain/administration/use-cases/register
 import { RegisterShipperUseCase } from '@/domain/administration/use-cases/register-shipper';
 import { ReleaseOrderForPickUpUseCase } from '@/domain/administration/use-cases/release-order-for-pick-up';
 import { UpdateAddresseeUseCase } from '@/domain/administration/use-cases/update-addressee';
+import { ListDeliveriesNearbyUseCase } from '@/domain/deliveries/use-cases/list-deliveries-nearby';
 import { PickUpDeliveryUseCase } from '@/domain/deliveries/use-cases/pick-up-delivery';
 import { ReturnDeliveryUseCase } from '@/domain/deliveries/use-cases/return-delivery';
 import { Module } from '@nestjs/common';
@@ -27,6 +28,7 @@ import { DeleteOrderController } from './controllers/delete-order.controller';
 import { DeleteShipperController } from './controllers/delete-shipper.controller.';
 import { GetOrderController } from './controllers/get-order.controller';
 import { ListDeliveriesFromShipperController } from './controllers/list-deliveries-from-shipper.controller';
+import { ListDeliveriesNearbyController } from './controllers/list-deliveries-nearby.controller';
 import { ListShippersController } from './controllers/list-shippers.controller';
 import { PickUpDeliveryController } from './controllers/pick-up-delivery.controller';
 import { RegisterAddresseeController } from './controllers/register-addressee.controller';
@@ -57,6 +59,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     ListDeliveriesFromShipperController,
     PickUpDeliveryController,
     ReturnDeliveryController,
+    ListDeliveriesNearbyController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -76,6 +79,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
     ListDeliveriesFromShipperUseCase,
     PickUpDeliveryUseCase,
     ReturnDeliveryUseCase,
+    ListDeliveriesNearbyUseCase,
   ],
 })
 export class HttpModule {}

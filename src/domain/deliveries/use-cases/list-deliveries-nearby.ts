@@ -1,4 +1,5 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { Delivery } from '../entities/delivery';
 import { DeliveriesRepository } from '../repositories/deliveries-repository';
 import { ShippersRepository } from '../repositories/shippers-repository';
@@ -9,6 +10,7 @@ interface ListDeliveriesNearbyUseCaseProps {
   shipperLongitude: number;
 }
 
+@Injectable()
 export class ListDeliveriesNearbyUseCase {
   constructor(
     private deliveriesRepository: DeliveriesRepository,

@@ -1,6 +1,7 @@
 import { Delivery } from '@/domain/deliveries/entities/delivery';
 import { DeliveriesRepository } from '@/domain/deliveries/repositories/deliveries-repository';
 import { Injectable } from '@nestjs/common';
+import { Order } from '@prisma/client';
 import { PrismaDeliveryMapper } from '../mappers/prisma-delivery-mapper';
 import { PrismaService } from '../prisma.service';
 
@@ -19,16 +20,14 @@ export class PrismaDeliveriesRepository implements DeliveriesRepository {
   }
 
   async findManyNearby(params: { latitude: number; longitude: number }) {
-    // const deliveries = await this.prisma.order.findMany({
-    //   take: perPage,
-    //   skip: (page - 1) * perPage,
-    //   orderBy: {
-    //     createdAt: 'asc',
-    //   },
-    // });
+    const deliveries: Order[] = await this.prisma.$queryRaw`
+      SELECT orders.* FROM orders
+      INNER JOIN addressees ON addressees.id = orders.addressee_id
+      WHERE ( 6371 * acos( cos( radians(${params.latitude}) ) * cos( radians( addressees.latitude ) ) * cos( radians( addressees.longitude ) - radians(${params.longitude}) ) + sin( radians(${params.latitude}) ) * sin( radians( addressees.latitude ) ) ) ) <= 10
+      AND orders.stage IN ('ON_THE_WAY', 'WAITING')
+    `;
 
-    // return deliveries.map(PrismaDeliveryMapper.toDomain);
-    return [];
+    return deliveries.map(PrismaDeliveryMapper.toDomain);
   }
 
   async update(delivery: Delivery) {
