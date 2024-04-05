@@ -11,7 +11,7 @@
 [ X ] Deve ser possível retirar uma encomenda
 [ X ] Deve ser possível marcar uma encomenda como devolvida
 [ X ] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
-[   ] Deve ser possível marcar uma encomenda como entregue
+[ X ] Deve ser possível marcar uma encomenda como entregue
 [   ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 ### Regras de negócio
@@ -21,11 +21,12 @@
 [ X ] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 [ X ] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 [ X ] Não deve ser possível um entregador listar as encomendas de outro entregador
-[   ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
-    [   ] Rota para pré registro de foto
+[ X ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
+    [ X ] Rota para pré registro de foto
 [   ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 
 
 [   ] Domain events
 [   ] Infra
 [   ] Order with addressee (details)
+[   ] Cache

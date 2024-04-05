@@ -13,6 +13,7 @@ import { RegisterOrderUseCase } from '@/domain/administration/use-cases/register
 import { RegisterShipperUseCase } from '@/domain/administration/use-cases/register-shipper';
 import { ReleaseOrderForPickUpUseCase } from '@/domain/administration/use-cases/release-order-for-pick-up';
 import { UpdateAddresseeUseCase } from '@/domain/administration/use-cases/update-addressee';
+import { DeliverDeliveryUseCase } from '@/domain/deliveries/use-cases/deliver-delivery';
 import { ListDeliveriesNearbyUseCase } from '@/domain/deliveries/use-cases/list-deliveries-nearby';
 import { PickUpDeliveryUseCase } from '@/domain/deliveries/use-cases/pick-up-delivery';
 import { ReturnDeliveryUseCase } from '@/domain/deliveries/use-cases/return-delivery';
@@ -28,6 +29,7 @@ import { ChangeShipperPasswordController } from './controllers/change-shipper-pa
 import { DeleteAddresseeController } from './controllers/delete-addressee.controller';
 import { DeleteOrderController } from './controllers/delete-order.controller';
 import { DeleteShipperController } from './controllers/delete-shipper.controller.';
+import { DeliverDeliveryController } from './controllers/deliver-delivery.controller';
 import { GetOrderController } from './controllers/get-order.controller';
 import { ListDeliveriesFromShipperController } from './controllers/list-deliveries-from-shipper.controller';
 import { ListDeliveriesNearbyController } from './controllers/list-deliveries-nearby.controller';
@@ -64,6 +66,7 @@ import { UploadAndCreatePhotoController } from './controllers/upload-and-create-
     ReturnDeliveryController,
     ListDeliveriesNearbyController,
     UploadAndCreatePhotoController,
+    DeliverDeliveryController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -85,6 +88,7 @@ import { UploadAndCreatePhotoController } from './controllers/upload-and-create-
     ReturnDeliveryUseCase,
     ListDeliveriesNearbyUseCase,
     UploadAndCreatePhotoUseCase,
+    DeliverDeliveryUseCase,
   ],
 })
 export class HttpModule {}
