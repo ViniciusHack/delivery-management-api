@@ -3,6 +3,7 @@ import { AdminsRepository } from '@/domain/administration/repositories/admins-re
 import { OrdersRepository } from '@/domain/administration/repositories/orders-repository';
 import { ShippersRepository } from '@/domain/administration/repositories/shippers-repository';
 import { DeliveriesRepository } from '@/domain/deliveries/repositories/deliveries-repository';
+import { PhotosRepository } from '@/domain/deliveries/repositories/photos-repository';
 import { ShippersRepository as DeliveryShippersRepository } from '@/domain/deliveries/repositories/shippers-repository';
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
@@ -11,6 +12,7 @@ import { PrismaAdminsRepository } from './prisma/repositories/prisma-admins-repo
 import { PrismaDeliveriesRepository } from './prisma/repositories/prisma-deliveries-repository';
 import { PrismaDeliveryShippersRepository } from './prisma/repositories/prisma-delivery-shippers-repository';
 import { PrismaOrdersRepository } from './prisma/repositories/prisma-orders-repository';
+import { PrismaPhotosRepository } from './prisma/repositories/prisma-photos-repository';
 import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-repository';
 
 @Module({
@@ -40,6 +42,10 @@ import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-
       provide: DeliveryShippersRepository,
       useClass: PrismaDeliveryShippersRepository,
     },
+    {
+      provide: PhotosRepository,
+      useClass: PrismaPhotosRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -49,6 +55,7 @@ import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-
     OrdersRepository,
     DeliveriesRepository,
     DeliveryShippersRepository,
+    PhotosRepository,
   ],
 })
 export class DatabaseModule {}

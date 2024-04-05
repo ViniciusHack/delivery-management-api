@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { Photo } from '../entities/photo';
 import { PhotosRepository } from '../repositories/photos-repository';
 import { Uploader } from '../storage/uploader';
@@ -9,6 +10,7 @@ interface UploadPhotoUseCaseProps {
   body: Buffer;
 }
 
+@Injectable()
 export class UploadAndCreatePhotoUseCase {
   constructor(
     private readonly photosRepository: PhotosRepository,

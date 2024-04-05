@@ -41,7 +41,7 @@ describe(`Upload and create photo (E2E)`, () => {
     expect(response.statusCode).toBe(201);
     expect(response.body).toEqual(
       expect.objectContaining({
-        photoId: expect.any(String),
+        id: expect.any(String),
       }),
     );
   });
