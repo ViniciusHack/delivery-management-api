@@ -42,7 +42,7 @@ export class UploadAndCreatePhotoController {
     try {
       const { photo } = await this.uploadControllerUseCase.execute({
         body: file.buffer,
-        fileName: file.filename,
+        fileName: file.originalname,
         fileType: file.mimetype,
       });
 

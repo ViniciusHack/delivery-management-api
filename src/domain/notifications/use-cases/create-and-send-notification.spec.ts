@@ -1,6 +1,6 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { makeRecipient } from 'test/factories/makeRecipient';
-import { FakeNotifier } from 'test/notification/notifier';
+import { FakeNotifier } from 'test/notification/fake-notifier';
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository';
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository';
 import { CreateAndSendNotificationUseCase } from './create-and-send-notification';
@@ -47,7 +47,7 @@ describe('Send notification', () => {
 
     expect(fakeNotifier.notificationsSent).toEqual([
       expect.objectContaining({
-        id: persistedNotification.id,
+        subject: 'my title',
       }),
     ]);
   });

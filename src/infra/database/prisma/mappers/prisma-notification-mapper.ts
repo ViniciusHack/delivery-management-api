@@ -8,7 +8,6 @@ export class NotificationMapper {
       recipientId: notification.recipientId,
       title: notification.title,
       createdAt: notification.createdAt,
-      readAt: notification.readAt ?? undefined,
       updatedAt: notification.updatedAt ?? undefined,
     });
   }
@@ -21,7 +20,6 @@ export class NotificationMapper {
       recipientId: notification.recipientId,
       title: notification.title,
       createdAt: notification.createdAt,
-      readAt: notification.readAt ?? undefined,
       updatedAt: notification.updatedAt ?? undefined,
     };
   }

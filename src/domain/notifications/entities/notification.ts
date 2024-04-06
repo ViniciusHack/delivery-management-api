@@ -1,13 +1,11 @@
 import { Entity } from '@/core/entity';
 import { Optional } from '@/core/utils';
-import { NotificationAlreadyRead } from './errors/notification-already-read';
 
 interface NotificationProps {
   title: string;
   message: string;
   recipientId: string;
   createdAt: Date;
-  readAt?: Date;
   updatedAt?: Date;
 }
 
@@ -32,20 +30,8 @@ export class Notification extends Entity<NotificationProps> {
     return this.props.createdAt;
   }
 
-  get readAt(): Date | undefined {
-    return this.props.readAt;
-  }
-
   get updatedAt(): Date | undefined {
     return this.props.updatedAt;
-  }
-
-  public read(): void {
-    if (this.props.readAt) {
-      throw new NotificationAlreadyRead();
-    }
-    this.props.readAt = new Date();
-    this.touch();
   }
 
   private touch() {

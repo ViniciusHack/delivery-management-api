@@ -12,7 +12,7 @@
 [ X ] Deve ser possível marcar uma encomenda como devolvida
 [ X ] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 [ X ] Deve ser possível marcar uma encomenda como entregue
-[   ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
+[ X ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 ### Regras de negócio
 
@@ -23,10 +23,8 @@
 [ X ] Não deve ser possível um entregador listar as encomendas de outro entregador
 [ X ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
     [ X ] Rota para pré registro de foto
-[   ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
+[ X ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 
-
-[   ] Domain events
-[   ] Infra
 [   ] Order with addressee (details)
 [   ] Cache
+[   ] Readme
