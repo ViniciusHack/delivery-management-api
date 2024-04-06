@@ -40,34 +40,33 @@ describe(`List deliveries nearby (E2E)`, () => {
       role: Role.Shipper,
     });
 
-    const [addresseeFar, addresseeNear] = await Promise.all([
-      addresseeFactory.makePrismaAddressee({
-        address: new Address({
-          city: 'São Paulo',
-          country: 'Brazil',
-          latitude: -53.9859021,
-          longitude: -23.1437386,
-          neighborhood: 'John hood',
-          number: '070',
-          state: 'John state',
-          street: 'John street',
-          zipCode: '302554912',
-        }),
+    const addresseeFar = await addresseeFactory.makePrismaAddressee({
+      address: new Address({
+        city: 'São Paulo',
+        country: 'Brazil',
+        latitude: -53.9859021,
+        longitude: -23.1437386,
+        neighborhood: 'John hood',
+        number: '070',
+        state: 'John state',
+        street: 'John street',
+        zipCode: '302554912',
       }),
-      addresseeFactory.makePrismaAddressee({
-        address: new Address({
-          city: 'São Paulo',
-          country: 'Brazil',
-          latitude: -48.9859021,
-          longitude: -21.1437386,
-          neighborhood: 'John hood',
-          number: '070',
-          state: 'John state',
-          street: 'John street',
-          zipCode: '302554912',
-        }),
+    });
+
+    const addresseeNear = await addresseeFactory.makePrismaAddressee({
+      address: new Address({
+        city: 'São Paulo',
+        country: 'Brazil',
+        latitude: -48.9859021,
+        longitude: -21.1437386,
+        neighborhood: 'John hood',
+        number: '070',
+        state: 'John state',
+        street: 'John street',
+        zipCode: '302554912',
       }),
-    ]);
+    });
 
     const orderFar = await orderFactory.makePrismaOrder({
       addresseeId: addresseeFar.id,
@@ -94,10 +93,14 @@ describe(`List deliveries nearby (E2E)`, () => {
       .send();
 
     expect(response.status).toBe(200);
+    console.log(response.body);
     expect(response.body.deliveries).toHaveLength(1);
     expect(response.body.deliveries).toEqual([
       expect.objectContaining({
         id: orderNear.id,
+        addressee: expect.objectContaining({
+          address: expect.any(String),
+        }),
       }),
     ]);
   });

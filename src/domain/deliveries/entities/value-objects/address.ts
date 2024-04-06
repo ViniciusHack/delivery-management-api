@@ -44,4 +44,8 @@ export class Address {
       this.zipCode === address.zipCode
     );
   }
+
+  toString(): string {
+    return `${this.street}, ${this.number} - ${this.neighborhood}, ${this.city} - ${this.state}, ${this.country} - ${this.zipCode}`;
+  }
 }

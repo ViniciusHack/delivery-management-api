@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
-import { DeliveryPresenter } from '../presenter/delivery-presenter';
 
 const coordinateParamSchema = z.coerce.number().max(90).min(-90);
 
@@ -42,9 +41,7 @@ export class ListDeliveriesNearbyController {
       });
 
       return {
-        deliveries: deliveries.map((delivery) =>
-          DeliveryPresenter.toHTTP(delivery),
-        ),
+        deliveries,
       };
     } catch (err) {
       console.log(err);

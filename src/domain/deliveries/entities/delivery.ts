@@ -3,7 +3,7 @@ import { DeliveryNotDeliverableError } from './errors/delivery-not-deliverable';
 import { DeliveryNotReturnableError } from './errors/delivery-not-returnable';
 import { DeliveryNotWaitingPickUpError } from './errors/delivery-not-waiting-for-pick-up';
 
-type Stage = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
+export type Stage = 'WAITING' | 'ON_THE_WAY' | 'DELIVERED' | 'RETURNED';
 
 interface DeliveryProps {
   stage: Stage; // Value Object?

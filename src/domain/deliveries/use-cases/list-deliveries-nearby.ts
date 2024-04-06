@@ -1,6 +1,5 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { Injectable } from '@nestjs/common';
-import { Delivery } from '../entities/delivery';
 import { DeliveriesRepository } from '../repositories/deliveries-repository';
 import { ShippersRepository } from '../repositories/shippers-repository';
 
@@ -21,7 +20,7 @@ export class ListDeliveriesNearbyUseCase {
     shipperId,
     shipperLatitude,
     shipperLongitude,
-  }: ListDeliveriesNearbyUseCaseProps): Promise<{ deliveries: Delivery[] }> {
+  }: ListDeliveriesNearbyUseCaseProps) {
     const shipperExists = await this.shippersRepository.findById(shipperId);
 
     if (!shipperExists) {
