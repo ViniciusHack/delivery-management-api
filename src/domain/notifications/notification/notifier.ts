@@ -1,5 +1,9 @@
-import { Notification } from '../entities/notification';
+export interface SendMailParams {
+  email: string;
+  content: string;
+  subject: string;
+}
 
 export abstract class Notifier {
-  abstract sendNotification(notification: Notification): Promise<void>;
+  abstract sendMail(params: SendMailParams): Promise<void>;
 }

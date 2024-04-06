@@ -10,6 +10,7 @@ export const envSchema = z.object({
   S3_ACCESS_KEY: z.string(),
   S3_SECRET_KEY: z.string(),
   GEOAPIFY_KEY: z.string(),
+  RESEND_API_KEY: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

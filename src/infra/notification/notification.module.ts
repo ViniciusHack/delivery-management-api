@@ -1,12 +1,14 @@
 import { Notifier } from '@/domain/notifications/notification/notifier';
 import { Module } from '@nestjs/common';
-import { FakeNotifier } from './notifier';
+import { EnvModule } from '../env/env.module';
+import { ResendNotifier } from './notifier';
 
 @Module({
+  imports: [EnvModule],
   providers: [
     {
       provide: Notifier,
-      useClass: FakeNotifier,
+      useClass: ResendNotifier,
     },
   ],
   exports: [Notifier],

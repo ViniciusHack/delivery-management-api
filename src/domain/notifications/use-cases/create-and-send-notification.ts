@@ -40,6 +40,10 @@ export class CreateAndSendNotificationUseCase {
 
     await this.notificationsRepository.create(notification);
 
-    await this.notifier.sendNotification(notification);
+    await this.notifier.sendMail({
+      content: notification.message,
+      email: recipientExists.email,
+      subject: notification.title,
+    });
   }
 }
