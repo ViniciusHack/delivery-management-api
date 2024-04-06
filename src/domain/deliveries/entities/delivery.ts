@@ -57,7 +57,7 @@ export class Delivery extends Entity<DeliveryProps> {
     return this.props.addresseeId;
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date | undefined | null {
     return this.props.updatedAt;
   }
 

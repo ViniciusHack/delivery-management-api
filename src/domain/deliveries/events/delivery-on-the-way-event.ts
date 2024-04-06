@@ -1,7 +1,7 @@
 import { DomainEvent } from '@/core/events/domain-event';
 import { Delivery } from '../entities/delivery';
 
-export class DeliveryOnTheWayEvent implements DomainEvent {
+export class DeliveryPickedUpEvent implements DomainEvent {
   public ocurredAt: Date;
   public addresseeId: string;
   public deliveryId: string;

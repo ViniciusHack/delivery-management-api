@@ -1,4 +1,5 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 import { Notification } from '../entities/notification';
 import { Notifier } from '../notification/notifier';
 import { NotificationsRepository } from '../repositories/notifications-repository';
@@ -10,6 +11,7 @@ interface CreateAndSendNotificationUseCaseProps {
   recipientId: string;
 }
 
+@Injectable()
 export class CreateAndSendNotificationUseCase {
   constructor(
     private notificationsRepository: NotificationsRepository,

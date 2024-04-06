@@ -1,21 +1,23 @@
 import { DomainEvents } from '@/core/events/domain-events';
 import { EventHandler } from '@/core/events/event-handler';
-import { DeliveryDeliveredEvent } from '@/domain/deliveries/events/delivery-delivered-event';
+import { DeliveryPickedUpEvent } from '@/domain/deliveries/events/delivery-on-the-way-event';
 import { CreateAndSendNotificationUseCase } from '../use-cases/create-and-send-notification';
 
 export class OnDeliveryPickedUp implements EventHandler {
   constructor(
     private createAndSendNotificationUseCase: CreateAndSendNotificationUseCase,
-  ) {}
+  ) {
+    this.setupSubscriptions();
+  }
 
   setupSubscriptions() {
     DomainEvents.register(
       this.sendNotification.bind(this),
-      DeliveryDeliveredEvent.name,
+      DeliveryPickedUpEvent.name,
     );
   }
 
-  async sendNotification(event: DeliveryDeliveredEvent) {
+  async sendNotification(event: DeliveryPickedUpEvent) {
     const { addresseeId } = event;
 
     await this.createAndSendNotificationUseCase.execute({

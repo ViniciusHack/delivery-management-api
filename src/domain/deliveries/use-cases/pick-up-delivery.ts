@@ -1,5 +1,7 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { DomainEvents } from '@/core/events/domain-events';
 import { Injectable } from '@nestjs/common';
+import { DeliveryPickedUpEvent } from '../events/delivery-on-the-way-event';
 import { DeliveriesRepository } from '../repositories/deliveries-repository';
 import { ShippersRepository } from '../repositories/shippers-repository';
 
@@ -34,5 +36,6 @@ export class PickUpDeliveryUseCase {
     delivery.pickUp(shipperId);
 
     await this.deliveriesRepository.update(delivery);
+    DomainEvents.dispatch(new DeliveryPickedUpEvent(delivery));
   }
 }

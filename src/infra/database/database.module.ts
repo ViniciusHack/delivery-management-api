@@ -5,14 +5,18 @@ import { ShippersRepository } from '@/domain/administration/repositories/shipper
 import { DeliveriesRepository } from '@/domain/deliveries/repositories/deliveries-repository';
 import { PhotosRepository } from '@/domain/deliveries/repositories/photos-repository';
 import { ShippersRepository as DeliveryShippersRepository } from '@/domain/deliveries/repositories/shippers-repository';
+import { NotificationsRepository } from '@/domain/notifications/repositories/notifications-repository';
+import { RecipientsRepository } from '@/domain/notifications/repositories/recipients-repository';
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaAddresseesRepository } from './prisma/repositories/prisma-addressees-repository';
 import { PrismaAdminsRepository } from './prisma/repositories/prisma-admins-repository';
 import { PrismaDeliveriesRepository } from './prisma/repositories/prisma-deliveries-repository';
 import { PrismaDeliveryShippersRepository } from './prisma/repositories/prisma-delivery-shippers-repository';
+import { PrismaNotificationsRepository } from './prisma/repositories/prisma-notifications-repository';
 import { PrismaOrdersRepository } from './prisma/repositories/prisma-orders-repository';
 import { PrismaPhotosRepository } from './prisma/repositories/prisma-photos-repository';
+import { PrismaRecipientsRepository } from './prisma/repositories/prisma-recipients-repository';
 import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-repository';
 
 @Module({
@@ -46,6 +50,14 @@ import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-
       provide: PhotosRepository,
       useClass: PrismaPhotosRepository,
     },
+    {
+      provide: NotificationsRepository,
+      useClass: PrismaNotificationsRepository,
+    },
+    {
+      provide: RecipientsRepository,
+      useClass: PrismaRecipientsRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -56,6 +68,8 @@ import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-
     DeliveriesRepository,
     DeliveryShippersRepository,
     PhotosRepository,
+    NotificationsRepository,
+    RecipientsRepository,
   ],
 })
 export class DatabaseModule {}

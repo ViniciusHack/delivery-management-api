@@ -3,9 +3,16 @@ import { OnDeliveryPickedUp } from '@/domain/notifications/subscribers/on-delive
 import { OnDeliveryReturned } from '@/domain/notifications/subscribers/on-delivery-returned';
 import { CreateAndSendNotificationUseCase } from '@/domain/notifications/use-cases/create-and-send-notification';
 import { Module } from '@nestjs/common';
+import { DatabaseModule } from '../database/database.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
-  imports: [CreateAndSendNotificationUseCase],
-  providers: [OnDeliveryDelivered, OnDeliveryReturned, OnDeliveryPickedUp],
+  imports: [DatabaseModule, NotificationModule],
+  providers: [
+    OnDeliveryDelivered,
+    OnDeliveryReturned,
+    OnDeliveryPickedUp,
+    CreateAndSendNotificationUseCase,
+  ],
 })
 export class EventsModule {}
