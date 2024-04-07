@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { execSync } from 'child_process';
 import { randomUUID } from 'crypto';
 import { config } from 'dotenv';
+import { Redis } from 'ioredis';
 
 config({
   path: '.env',
@@ -18,6 +19,12 @@ config({
 const env = envSchema.parse(process.env);
 const schemaId = randomUUID();
 const prisma = new PrismaClient();
+
+const redis = new Redis({
+  host: env.REDIS_HOST,
+  port: env.REDIS_PORT,
+  db: env.REDIS_DB,
+});
 
 function generateUniqueDatabaseURL() {
   const url = new URL(env.DATABASE_URL);
@@ -40,4 +47,5 @@ beforeAll(async () => {
 afterAll(async () => {
   await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`);
   await prisma.$disconnect();
+  await redis.flushdb();
 });

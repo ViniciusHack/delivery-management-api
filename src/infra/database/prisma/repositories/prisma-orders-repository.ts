@@ -6,7 +6,6 @@ import {
 } from '@/domain/administration/repositories/orders-repository';
 import { CacheRepository } from '@/infra/cache/cache-repository';
 import { Injectable } from '@nestjs/common';
-import { Order as PrismaOrder } from 'prisma';
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
 import { PrismaService } from '../prisma.service';
 
@@ -58,19 +57,22 @@ export class PrismaOrdersRepository implements OrdersRepository {
   async findManyByAddresseeId(addresseeId: string) {
     const cacheHit = await this.cache.get(`${addresseeId}:orders`);
     if (cacheHit) {
-      const orders: PrismaOrder[] = JSON.parse(cacheHit);
-      return orders.map((order) => PrismaOrderMapper.toDomain(order));
+      const orders: Order[] = JSON.parse(cacheHit);
+      return orders;
     }
 
-    const orders = await this.prisma.order.findMany({
+    const prismaOrders = await this.prisma.order.findMany({
       where: {
         addresseeId: addresseeId,
       },
     });
 
-    await this.cache.set(`${addresseeId}:orders`, JSON.stringify(orders));
+    const orders = prismaOrders.map((order) =>
+      PrismaOrderMapper.toDomain(order),
+    );
 
-    return orders.map((order) => PrismaOrderMapper.toDomain(order));
+    await this.cache.set(`${addresseeId}:orders`, JSON.stringify(orders));
+    return orders;
   }
 
   async create(order: Order) {

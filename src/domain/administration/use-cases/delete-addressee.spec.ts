@@ -20,7 +20,7 @@ describe('Delete addressee', () => {
     );
   });
 
-  it('should delete a addressee', async () => {
+  it('should delete an addressee', async () => {
     const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
@@ -39,7 +39,7 @@ describe('Delete addressee', () => {
     expect(persistedAddressee).toBeNull();
   });
 
-  it('should not be able to delete a addressee with an invalid admin', async () => {
+  it('should not be able to delete an addressee with an invalid admin', async () => {
     const addressee = makeAddressee();
     inMemoryAddresseesRepository.create(addressee);
 
@@ -48,7 +48,7 @@ describe('Delete addressee', () => {
     ).rejects.toThrow(NotAllowedError);
   });
 
-  it('should not be able to delete a addressee that does not exist', async () => {
+  it('should not be able to delete an addressee that does not exist', async () => {
     const admin = makeAdmin();
     await inMemoryAdminsRepository.create(admin);
 

@@ -26,7 +26,7 @@ describe('List orders from addressee', () => {
     );
   });
 
-  it(`should be able to list orders of a addressee when you're an admin`, async () => {
+  it(`should be able to list orders of an addressee when you're an admin`, async () => {
     const admin = makeAdmin();
 
     await inMemoryAdminsRepository.create(admin);
