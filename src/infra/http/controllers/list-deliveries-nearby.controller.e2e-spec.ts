@@ -94,7 +94,6 @@ describe(`List deliveries nearby (E2E)`, () => {
       .send();
 
     expect(response.status).toBe(200);
-    console.log(response.body);
     expect(response.body.deliveries).toHaveLength(1);
     expect(response.body.deliveries).toEqual([
       expect.objectContaining({

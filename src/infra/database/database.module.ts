@@ -8,6 +8,7 @@ import { ShippersRepository as DeliveryShippersRepository } from '@/domain/deliv
 import { NotificationsRepository } from '@/domain/notifications/repositories/notifications-repository';
 import { RecipientsRepository } from '@/domain/notifications/repositories/recipients-repository';
 import { Module } from '@nestjs/common';
+import { CacheModule } from '../cache/cache.module';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaAddresseesRepository } from './prisma/repositories/prisma-addressees-repository';
 import { PrismaAdminsRepository } from './prisma/repositories/prisma-admins-repository';
@@ -20,6 +21,7 @@ import { PrismaRecipientsRepository } from './prisma/repositories/prisma-recipie
 import { PrismaShippersRepository } from './prisma/repositories/prisma-shippers-repository';
 
 @Module({
+  imports: [CacheModule],
   providers: [
     PrismaService,
     {

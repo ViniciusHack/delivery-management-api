@@ -6,6 +6,7 @@ import { DeleteOrderUseCase } from '@/domain/administration/use-cases/delete-ord
 import { DeleteShipperUseCase } from '@/domain/administration/use-cases/delete-shipper';
 import { GetOrderUseCase } from '@/domain/administration/use-cases/get-order';
 import { ListDeliveriesFromShipperUseCase } from '@/domain/administration/use-cases/list-deliveries-from-shipper';
+import { ListOrdersFromAddresseeUseCase } from '@/domain/administration/use-cases/list-orders-from-addressee';
 import { ListShippersUseCase } from '@/domain/administration/use-cases/list-shippers';
 import { RegisterAddresseeUseCase } from '@/domain/administration/use-cases/register-addressee';
 import { RegisterAdminUseCase } from '@/domain/administration/use-cases/register-admin';
@@ -20,7 +21,6 @@ import { ReturnDeliveryUseCase } from '@/domain/deliveries/use-cases/return-deli
 import { UploadAndCreatePhotoUseCase } from '@/domain/deliveries/use-cases/upload-and-create-photo';
 import { Module } from '@nestjs/common';
 import { AddressesModule } from '../addresses/addresses.module';
-import { CacheModule } from '../cache/cache.module';
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { DatabaseModule } from '../database/database.module';
 import { StorageModule } from '../storage/storage.module';
@@ -34,6 +34,7 @@ import { DeliverDeliveryController } from './controllers/deliver-delivery.contro
 import { GetOrderController } from './controllers/get-order.controller';
 import { ListDeliveriesFromShipperController } from './controllers/list-deliveries-from-shipper.controller';
 import { ListDeliveriesNearbyController } from './controllers/list-deliveries-nearby.controller';
+import { ListOrdersFromAddresseeController } from './controllers/list-orders-from-addressee.controller';
 import { ListShippersController } from './controllers/list-shippers.controller';
 import { PickUpDeliveryController } from './controllers/pick-up-delivery.controller';
 import { RegisterAddresseeController } from './controllers/register-addressee.controller';
@@ -46,13 +47,7 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
 import { UploadAndCreatePhotoController } from './controllers/upload-and-create-photo.controller';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    CryptographyModule,
-    AddressesModule,
-    StorageModule,
-    CacheModule,
-  ],
+  imports: [DatabaseModule, CryptographyModule, AddressesModule, StorageModule],
   controllers: [
     RegisterAdminController,
     AuthenticateController,
@@ -74,6 +69,7 @@ import { UploadAndCreatePhotoController } from './controllers/upload-and-create-
     ListDeliveriesNearbyController,
     UploadAndCreatePhotoController,
     DeliverDeliveryController,
+    ListOrdersFromAddresseeController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -96,6 +92,7 @@ import { UploadAndCreatePhotoController } from './controllers/upload-and-create-
     ListDeliveriesNearbyUseCase,
     UploadAndCreatePhotoUseCase,
     DeliverDeliveryUseCase,
+    ListOrdersFromAddresseeUseCase,
   ],
 })
 export class HttpModule {}

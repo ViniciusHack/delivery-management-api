@@ -27,6 +27,7 @@
 
 [ X ] Order with addressee (details)
 [   ] Cache
-    [   ] List orders by addressee -> Infra
+    [ X ] List orders by addressee -> Infra
     [   ] Cache test
+[   ] Domain events test
 [   ] Readme
