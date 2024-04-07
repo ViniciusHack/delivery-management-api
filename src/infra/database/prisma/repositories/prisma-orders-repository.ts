@@ -4,13 +4,15 @@ import {
   FindManyByShipperIdParams,
   OrdersRepository,
 } from '@/domain/administration/repositories/orders-repository';
+import { CacheRepository } from '@/infra/cache/cache-repository';
 import { Injectable } from '@nestjs/common';
+import { Order as PrismaOrder } from 'prisma';
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaOrdersRepository implements OrdersRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private cache: CacheRepository) {}
 
   async findById(id: string) {
     const order = await this.prisma.order.findUnique({
@@ -53,10 +55,29 @@ export class PrismaOrdersRepository implements OrdersRepository {
     return orders.map(PrismaOrderMapper.toDomain);
   }
 
+  async findManyByAddresseeId(addresseeId: string) {
+    const cacheHit = await this.cache.get(`${addresseeId}:orders`);
+    if (cacheHit) {
+      const orders: PrismaOrder[] = JSON.parse(cacheHit);
+      return orders.map((order) => PrismaOrderMapper.toDomain(order));
+    }
+
+    const orders = await this.prisma.order.findMany({
+      where: {
+        addresseeId: addresseeId,
+      },
+    });
+
+    await this.cache.set(`${addresseeId}:orders`, JSON.stringify(orders));
+
+    return orders.map((order) => PrismaOrderMapper.toDomain(order));
+  }
+
   async create(order: Order) {
     await this.prisma.order.create({
       data: PrismaOrderMapper.toPersistence(order),
     });
+    await this.cache.delete(`${order.addresseeId}:orders`);
   }
 
   async update(order: Order) {
@@ -69,10 +90,14 @@ export class PrismaOrdersRepository implements OrdersRepository {
   }
 
   async delete(id: string) {
-    await this.prisma.order.delete({
+    const order = await this.prisma.order.delete({
+      select: {
+        addresseeId: true,
+      },
       where: {
         id,
       },
     });
+    await this.cache.delete(`${order.addresseeId}:orders`);
   }
 }

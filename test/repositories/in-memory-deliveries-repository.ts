@@ -15,8 +15,8 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
   }
 
   async findManyNearby(params: { latitude: number; longitude: number }) {
-    const addresseesNearby = this.inMemoryAddresseesRepository.items
-      .filter((addressee) => {
+    const addresseesNearby = this.inMemoryAddresseesRepository.items.filter(
+      (addressee) => {
         const distance = getDistanceBetweenCoordinates(
           {
             latitude: params.latitude,
@@ -29,12 +29,29 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
         );
 
         return distance < 10;
-      })
-      .map((addressee) => addressee.id);
-
-    return this.items.filter((delivery) =>
-      addresseesNearby.includes(delivery.addresseeId),
+      },
     );
+
+    const deliveriesNearby = this.items.filter((delivery) =>
+      addresseesNearby.some(
+        (addressee) => addressee.id === delivery.addresseeId,
+      ),
+    );
+
+    return deliveriesNearby.map((delivery) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const addressee = addresseesNearby.find(
+        (addressee) => addressee.id === delivery.addresseeId,
+      )!;
+      return {
+        id: delivery.id,
+        stage: delivery.stage,
+        updatedAt: delivery.updatedAt ?? undefined,
+        addressee: {
+          address: addressee.address.toString(),
+        },
+      };
+    });
   }
 
   async update(delivery: Delivery) {

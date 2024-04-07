@@ -68,7 +68,8 @@ describe(`List deliveries nearby (E2E)`, () => {
       }),
     });
 
-    const orderFar = await orderFactory.makePrismaOrder({
+    // orderFar
+    await orderFactory.makePrismaOrder({
       addresseeId: addresseeFar.id,
       shipperId: shipper.id,
       stage: 'ON_THE_WAY',

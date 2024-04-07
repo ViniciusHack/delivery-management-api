@@ -11,6 +11,9 @@ export const envSchema = z.object({
   S3_SECRET_KEY: z.string(),
   GEOAPIFY_KEY: z.string(),
   RESEND_API_KEY: z.string(),
+  REDIS_HOST: z.string().default('localhost'),
+  REDIS_PORT: z.coerce.number().default(6379),
+  REDIS_DB: z.coerce.number().default(0),
 });
 
 export type Env = z.infer<typeof envSchema>;

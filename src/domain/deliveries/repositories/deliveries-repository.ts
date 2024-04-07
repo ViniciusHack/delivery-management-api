@@ -1,6 +1,6 @@
 import { Delivery, Stage } from '../entities/delivery';
 
-export interface DeliveriesWithAddressee {
+export interface DeliveryWithAddressee {
   id: string;
   stage: Stage;
   addressee: {
@@ -14,6 +14,6 @@ export abstract class DeliveriesRepository {
   abstract findManyNearby(params: {
     latitude: number;
     longitude: number;
-  }): Promise<DeliveriesWithAddressee[]>;
+  }): Promise<DeliveryWithAddressee[]>;
   abstract update(delivery: Delivery): Promise<void>;
 }

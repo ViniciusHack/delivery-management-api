@@ -12,6 +12,10 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     return this.items.find((order) => order.id === id) ?? null;
   }
 
+  async findManyByAddresseeId(addresseeId: string) {
+    return this.items.filter((order) => order.addresseeId === addresseeId);
+  }
+
   async findMany({ page, perPage }: PaginationParams): Promise<Order[]> {
     return this.items.slice((page - 1) * perPage, page * perPage);
   }

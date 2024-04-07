@@ -11,6 +11,7 @@ export abstract class OrdersRepository {
   abstract findManyByShipperId(
     params: FindManyByShipperIdParams,
   ): Promise<Order[]>;
+  abstract findManyByAddresseeId(addresseeId: string): Promise<Order[]>;
   abstract update(order: Order): Promise<void>;
   abstract create(order: Order): Promise<void>;
   abstract delete(id: string): Promise<void>;

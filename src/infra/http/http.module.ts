@@ -20,6 +20,7 @@ import { ReturnDeliveryUseCase } from '@/domain/deliveries/use-cases/return-deli
 import { UploadAndCreatePhotoUseCase } from '@/domain/deliveries/use-cases/upload-and-create-photo';
 import { Module } from '@nestjs/common';
 import { AddressesModule } from '../addresses/addresses.module';
+import { CacheModule } from '../cache/cache.module';
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { DatabaseModule } from '../database/database.module';
 import { StorageModule } from '../storage/storage.module';
@@ -45,7 +46,13 @@ import { UpdateAddresseeController } from './controllers/update-addressee.contro
 import { UploadAndCreatePhotoController } from './controllers/upload-and-create-photo.controller';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, AddressesModule, StorageModule],
+  imports: [
+    DatabaseModule,
+    CryptographyModule,
+    AddressesModule,
+    StorageModule,
+    CacheModule,
+  ],
   controllers: [
     RegisterAdminController,
     AuthenticateController,

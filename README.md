@@ -25,6 +25,8 @@
     [ X ] Rota para pré registro de foto
 [ X ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 
-[   ] Order with addressee (details)
+[ X ] Order with addressee (details)
 [   ] Cache
+    [   ] List orders by addressee -> Infra
+    [   ] Cache test
 [   ] Readme
