@@ -28,6 +28,7 @@ export class PickUpDeliveryController {
         shipperId: user.sub,
       });
     } catch (err) {
+      console.log(err);
       if (err instanceof ResourceNotFoundError) {
         throw new NotFoundException(err.message);
       }

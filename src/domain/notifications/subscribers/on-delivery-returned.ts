@@ -23,9 +23,9 @@ export class OnDeliveryReturned implements EventHandler {
     const { addresseeId } = event;
 
     await this.createAndSendNotificationUseCase.execute({
-      message: 'Sua encomenda retornou!',
+      message: 'Devido as circunstâncias, sua entrega retornou.',
       recipientId: addresseeId,
-      title: 'Sua entrega retornou!!',
+      title: 'Sua entrega retornou.',
     });
   }
 }
