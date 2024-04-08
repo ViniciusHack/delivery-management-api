@@ -22,14 +22,15 @@ Fast Feet API
 
 <p align="center">
   <a href="#-about-the-project">About the project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-features">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-getting-started">Getting started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-technologies">Technologies</a>
+  <a href="#-main-features">Main Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-main-concepts-worked">Main Concepts</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-getting-started">Getting started</a>
 </p>
 
 
 ## 👨🏻‍💻 About the project
-**Fast Feet** is a delivery management API. Built based on this <a href="https://www.figma.com/file/hn0qGhnSHDVst7oaY3PF72/FastFeet">app design</a>
+**Fast Feet** is a delivery management API made for delivery companies. Built based on this <a id="about-the-project" href="https://www.figma.com/file/hn0qGhnSHDVst7oaY3PF72/FastFeet">app design</a>
 <br />
 <br />
 It's the last project and challenge from Ignite's course and the largest one too. In this project I could improve my skills in a lot of different technologie and concepts.
@@ -89,7 +90,7 @@ In spite of me not being or knowing someone that is an expert of this domain, I'
 ### Requirements
 
 - <a href="https://nodejs.org/en/">NodeJS</a>
-- <a href="[https://classic.yarnpkg.com/lang/en/docs/install/](https://docs.docker.com/engine/install/)">Docker</a>
+- <a href="https://docs.docker.com/engine/install/">Docker</a>
 
 **Follow the steps below**
 
@@ -103,7 +104,7 @@ $ npm i
 # Run containers
 $ docker-compose up
 
-# Note, before running the app, define your environment variables
+# Note: before running the app, define your environment variables
 
 # Start the client
 $ npm run start:dev
