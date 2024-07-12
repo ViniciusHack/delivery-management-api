@@ -66,7 +66,7 @@ In spite of me not being or knowing someone that is an expert of this domain, I'
 - External APIs communication
     - Mailing ([Resend](https://resend.com/overview) Free tier)
     - Geocoding ([GeoAPIFY](https://www.geoapify.com/geocoding-api/))
-- Storaging ([Cloudflare R2/AWS S3](https://www.cloudflare.com/pt-br/developer-platform/r2/))
+- Storage ([Cloudflare R2/AWS S3](https://www.cloudflare.com/pt-br/developer-platform/r2/))
   - File uploading
 - Testing (Unit and E2E)
 
